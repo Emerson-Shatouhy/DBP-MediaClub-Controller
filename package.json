@@ -1,0 +1,20 @@
+{
+  "name": "dbp-mediaclub",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "Emerson Shatouhy",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^8.2.5"
+  },
+  "dependencies": {
+    "canvas": "^2.6.1",
+    "canvas-constructor": "^3.2.0",
+    "edit-json-file": "^1.4.0",
+    "fs": "0.0.1-security"
+  }
+}
