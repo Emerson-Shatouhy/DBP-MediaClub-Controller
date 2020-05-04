@@ -44,7 +44,7 @@
       </div>
       <div class="modal-body">
     <!-- Form for Info -->
-    <form id="myForm" action="#" onsubmit="modalSubmit();return false">
+    <form id="modalForm" action="#" onsubmit="modalSubmit();return false">
       <div class="form-group">
           <label for="sportControl">Sport:</label>
           <select name="sport" class="form-control" id="sportControl">
@@ -63,6 +63,9 @@
 </div>
 </div>
 </div>
+<!-- Alerts -->
+
+
 
 <!-- Output Video -->
 <div class="container">
@@ -82,14 +85,14 @@
       <hr class="my-3">
       <h2>Clock</h2>
       <div class="btn-group" role="group" aria-label="Clock Control">
-        <button type="button" class="btn btn-success">Start</button>
-        <button type="button" class="btn btn-danger">Stop</button>
-        <button type="button" class="btn btn-primary">Set</button>
+        <button type="button" class="btn btn-success" onclick="clock('start')">Start</button>
+        <button type="button" class="btn btn-danger" onclick="clock('stop')">Stop</button>
+        <button type="button" class="btn btn-primary" onclick="clock('set')">Set</button>
         <div class="input-group">
     <div class="input-group-prepend">
-      <div class="input-group-text" id="btnGroupAddon">Current Time:</div>
+      <div class="input-group-text" id="btnGroupAddon">Time:</div>
     </div>
-    <input type="text" class="form-control" placeholder="MM:SS" aria-label="Input group example" aria-describedby="btnGroupAddon">
+    <input id="clockSet" type="text" class="form-control" placeholder="MM:SS" aria-label="Input group example" aria-describedby="btnGroupAddon" value="12:00">
       </div>
     </div>
 

@@ -1,10 +1,5 @@
-const {
-    app,
-    BrowserWindow
-} = require('electron')
-const {
-    ipcMain
-} = require('electron');
+const {app, BrowserWindow} = require('electron')
+const { ipcMain } = require('electron');
 var id = 0;
 
 function createWindow() {
@@ -28,7 +23,6 @@ function createWindow() {
 
     //IPC START HERE
     ipcMain.handle('init', async (event, someArgument) => {
-        //console.log(someArgument)
         let outPut = new BrowserWindow({
             webPreferences: {
                 nodeIntegration: true,
@@ -50,19 +44,49 @@ function createWindow() {
             msg: 'hello from main process'
         });
     })
-
+//Add Point
     ipcMain.handle('addPoint', async (event, num, team) => {
         BrowserWindow.fromId(id).webContents.send('addPoint', {
             points: num,
             team: team
         });
     });
+
+//Remove Point
     ipcMain.handle('delPoint', async (event, num, team) => {
         BrowserWindow.fromId(id).webContents.send('delPoint', {
             points: num,
             team: team
         });
     });
+
+//Clock Control
+ipcMain.handle('clock', async (event, action, newTime) => {
+    BrowserWindow.fromId(id).webContents.send('clock', {
+        action: action,
+        newTime: newTime,
+    });
+});
+
+ipcMain.handle('clockDone', async (event) => {
+    BrowserWindow.fromId(win.id).webContents.send('clockDone')
+});
+
+//Set Quarter
+ipcMain.handle('setQuarter', async (event, quarter) => {
+    BrowserWindow.fromId(id).webContents.send('setQuarter', {
+        quarter: quarter,
+    });
+});
+
+ipcMain.handle('currentTime', async (event, min, sec) => {
+    BrowserWindow.fromId(win.id).webContents.send('currentTime', {
+      min : min,
+      sec : sec,
+    })
+});
+
+
 }
 
 // This method will be called when Electron has finished
@@ -91,18 +115,7 @@ app.on('activate', () => {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
-var windowArray = BrowserWindow.getAllWindows();
 
-function getWindow(windowName) {
-    console.log(windowArray);
-    for (var i = 0; i < windowArray.length; i++) {
-        if (windowArray[i].name == windowName) {
-            return windowArray[i].window;
-        }
-        console.log(windowArray[i].name);
-    }
-    return null;
-}
 
 
 function sleep(milliseconds) {

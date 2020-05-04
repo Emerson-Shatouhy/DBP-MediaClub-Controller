@@ -9,11 +9,12 @@ let config = editJsonFile(`${__dirname}/assets/data/sports.json`);
 //Opens Modal on Start
 $(document).ready(function() {
     $('#mainModal').modal('show')
+
 });
 
 //Modal Control
 function modalSubmit() {
-    config.set("otherTeam", document.forms["myForm"]["vistingTeam"].value);
+    config.set("otherTeam", document.forms["modalForm"]["vistingTeam"].value);
     var current = document.getElementById("opponent").innerHTML;
     document.getElementById("opponent").innerHTML = config.get("otherTeam") + " " + current;
     config.set("boscoScore", 0);
@@ -68,6 +69,33 @@ $(".btnSeccion").click(function(event) {
     btnMostrarSeccion($(this));
     event.preventDefault();
 })
+
+//Clock Control
+function clock(arg){
+  if(arg == "start"){
+    document.getElementById("clockSet").setAttribute('disabled','true');
+    ipcRenderer.invoke('clock', 'start');
+  }
+  if(arg == "stop"){
+    ipcRenderer.invoke('clock', 'stop');
+    document.getElementById("clockSet").removeAttribute('disabled');
+  }
+  if(arg == "set"){
+    ipcRenderer.invoke('clock', 'set', document.getElementById("clockSet").value);
+  }
+}
+
+//Clock Done Alert
+ipcRenderer.on('clockDone', function(event) {
+  console.log("Done")
+$('.alert').alert()
+});
+
+//Current Time
+ipcRenderer.on('currentTime', function(event, data) {
+var newTime = data.min + ":" + data.sec;
+document.getElementById("clockSet").setAttribute('value', newTime.toString());
+});
 
 //Add Points
 function addOne(team) {
