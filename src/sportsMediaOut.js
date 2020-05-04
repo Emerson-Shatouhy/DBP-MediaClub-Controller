@@ -72,6 +72,7 @@ function clockSet(){
     clock = null;
     ipcRenderer.invoke('clockDone');
     document.getElementById("Clock").innerHTML = "00:00";
+    ipcRenderer.invoke('currentTime', currMin, currSec);
   } else {
   document.getElementById("Clock").innerHTML = currMin + ":" + currSec;
   ipcRenderer.invoke('currentTime', currMin, currSec);
