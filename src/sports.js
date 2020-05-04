@@ -94,7 +94,7 @@ $('.alert').alert()
 //Current Time
 ipcRenderer.on('currentTime', function(event, data) {
 var newTime = data.min + ":" + data.sec;
-document.getElementById("clockSet").setAttribute('value', newTime.toString());
+document.getElementById("clockSet").value = newTime.toString();
 });
 
 //Add Points
