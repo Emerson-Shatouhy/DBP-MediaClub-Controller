@@ -116,95 +116,23 @@ function quarter(){
 ipcRenderer.invoke('setQuarter', document.getElementById("quarterSet").value);
 }
 
-//Add Points
-function addOne(team) {
-    if (team == "bosco") {
-        document.getElementById("boscoScore").innerHTML = config.get("boscoScore") + 1;
-        ipcRenderer.invoke('addPoint', '1', "Bosco");
-        config.set("boscoScore", config.get("boscoScore") + 1);
-        config.save();
-    } else if (team == "other") {
-        document.getElementById("otherScore").innerHTML = config.get("otherScore") + 1;
-        ipcRenderer.invoke('addPoint', '1', "Other");
-        config.set("otherScore", config.get("otherScore") + 1);
-        config.save();
-    }
+function points(team, points, action){
+  var teamID = team + "Score";
+  currentScore = Number(document.getElementById(teamID).innerHTML);
+  switch(action){
+    case "+":
+    console.log("+")
+      var newScore = document.getElementById(teamID).innerHTML = currentScore + Number(points);
+      ipcRenderer.invoke('point', teamID, newScore);
+      break;
+    case "-":
+    var newScore = document.getElementById(teamID).innerHTML = currentScore - Number(points);
+    ipcRenderer.invoke('point', teamID, newScore);
+    break;
+  }
 }
 
-//Add 2 Points
-function addTwo(team) {
-    if (team == "bosco") {
-        document.getElementById("boscoScore").innerHTML = config.get("boscoScore") + 2;
-        ipcRenderer.invoke('addPoint', '2', "Bosco");
-        config.set("boscoScore", config.get("boscoScore") + 2);
-        config.save();
-    } else if (team == "other") {
-        document.getElementById("otherScore").innerHTML = config.get("otherScore") + 2;
-        ipcRenderer.invoke('addPoint', '2', "Other");
-        config.set("otherScore", config.get("otherScore") + 2);
-        config.save();
-    }
-}
 
-//Add 3 Points
-function addThree(team) {
-    if (team == "bosco") {
-        document.getElementById("boscoScore").innerHTML = config.get("boscoScore") + 3;
-        ipcRenderer.invoke('addPoint', '3', "Bosco");
-        config.set("boscoScore", config.get("boscoScore") + 3);
-        config.save();
-    } else if (team == "other") {
-        document.getElementById("otherScore").innerHTML = config.get("otherScore") + 3;
-        ipcRenderer.invoke('addPoint', '3', "Other");
-        config.set("otherScore", config.get("otherScore") + 3);
-        config.save();
-    }
-}
-
-//Remove Points
-function removeOne(team) {
-    if (team == "bosco") {
-        document.getElementById("boscoScore").innerHTML = config.get("boscoScore") - 1;
-        ipcRenderer.invoke('delPoint', '1', "Bosco");
-        config.set("boscoScore", config.get("boscoScore") - 1);
-        config.save();
-    } else if (team == "other") {
-        document.getElementById("otherScore").innerHTML = config.get("otherScore") - 1;
-        ipcRenderer.invoke('delPoint', '1', "Other");
-        config.set("otherScore", config.get("otherScore") - 1);
-        config.save();
-    }
-}
-
-function removeTwo(team) {
-    if (team == "bosco") {
-        document.getElementById("boscoScore").innerHTML = config.get("boscoScore") - 2;
-        ipcRenderer.invoke('delPoint', '2', "Bosco");
-        config.set("boscoScore", config.get("boscoScore") - 2);
-        config.save();
-    } else if (team == "other") {
-        document.getElementById("otherScore").innerHTML = config.get("otherScore") - 2;
-        ipcRenderer.invoke('delPoint', '2', "Other");
-        config.set("otherScore", config.get("otherScore") - 2);
-        config.save();
-    }
-}
-
-function removeThree(team) {
-    if (team == "bosco") {
-        document.getElementById("boscoScore").innerHTML = config.get("boscoScore") - 3;
-        ipcRenderer.invoke('delPoint', '3', "Bosco");
-        config.set("boscoScore", config.get("boscoScore") - 3);
-        config.save();
-    } else if (team == "other") {
-        document.getElementById("otherScore").innerHTML = config.get("otherScore") - 3;
-        ipcRenderer.invoke('delPoint', '3', "Other");
-        config.set("otherScore", config.get("otherScore") - 3);
-
-    }
-}
-
-//File Reader
 //Sleep Function
 function sleep(milliseconds) {
     var start = new Date().getTime();

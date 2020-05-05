@@ -39,10 +39,10 @@ function createWindow() {
         });
     })
 //Add Point
-    ipcMain.handle('addPoint', async (event, num, team) => {
-        BrowserWindow.fromId(id).webContents.send('addPoint', {
+    ipcMain.handle('point', async (event, team, num) => {
+        BrowserWindow.fromId(id).webContents.send('point', {
             points: num,
-            team: team
+            team: team,
         });
     });
 

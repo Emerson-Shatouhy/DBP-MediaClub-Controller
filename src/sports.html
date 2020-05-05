@@ -114,29 +114,41 @@
         <input id="quarterSet" type="text" class="form-control" placeholder="Q1" aria-label="Input group example" aria-describedby="btnGroupAddon" value="Q1">
 </div></div>
 
+
+
+
+
+
+
+
+
+
+
+
+<!--Points Buttons-->
       <div class="row">
           <div class="col">
             <h2>Bosco <small class="text-muted" id="boscoScore">0</small></h2>
             <div class="btn-group-lg" role="group" aria-label="Bosco Score">
-        <button type="button" class="btn btn-success" onclick="addOne('bosco')">+1</button>
-        <button type="button" class="btn btn-success" onclick="addTwo('bosco')">+2</button>
-        <button type="button" class="btn btn-success" onclick="addThree('bosco')">+3</button>
+        <button type="button" class="btn btn-success" onclick="points('bosco', '1', '+')">+1</button>
+        <button type="button" class="btn btn-success" onclick="points('bosco', '2', '+')">+2</button>
+        <button type="button"  class="btn btn-success" onclick="points('bosco', '3', '+')">+3</button>
         <br><br>
-        <button type="button" class="btn btn-danger" onclick="removeOne('bosco')">-1</button>
-        <button type="button" class="btn btn-danger" onclick="removeTwo('bosco')">-2</button>
-        <button type="button" class="btn btn-danger" onclick="removeThree('bosco')">-3</button>
+        <button type="button" class="btn btn-danger" onclick="points('bosco', '1', '-')">-1</button>
+        <button type="button" class="btn btn-danger" onclick="points('bosco', '2', '-')">-2</button>
+        <button type="button" class="btn btn-danger" onclick="points('bosco', '3', '-')">-3</button>
       </div>
           </div>
           <div class="col">
             <h2 id="opponent"><small class="text-muted" id="otherScore">0</small></h2>
             <div class="btn-group-lg" role="group" aria-label="Opponent Score">
-        <button type="button" class="btn btn-success" onclick="addOne('other')">+1</button>
-        <button type="button" class="btn btn-success" onclick="addTwo('other')">+2</button>
-        <button type="button" class="btn btn-success" onclick="addThree('other')">+3</button>
+        <button type="button" class="btn btn-success" onclick="points('other', '1', '+')">+1</button>
+        <button type="button" class="btn btn-success" onclick="points('other', '2', '+')">+2</button>
+        <button type="button" class="btn btn-success" onclick="points('other', '3', '+')">+3</button>
         <br><br>
-        <button type="button" class="btn btn-danger" onclick="removeOne('other')">-1</button>
-        <button type="button" class="btn btn-danger" onclick="removeTwo('other')">-2</button>
-        <button type="button" class="btn btn-danger" onclick="removeThree('other')">-3</button>
+        <button type="button" class="btn btn-danger" onclick="points('other', '1', '-')">-1</button>
+        <button type="button" class="btn btn-danger" onclick="points('other', '2', '-')">-2</button>
+        <button type="button" class="btn btn-danger" onclick="points('other', '3', '-')">-3</button>
       </div>
 
           </div>

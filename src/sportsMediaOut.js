@@ -1,7 +1,5 @@
-const editJsonFile = require("edit-json-file");
 const electron = require('electron')
 const ipcRenderer = electron.ipcRenderer;
-let config = editJsonFile(`${__dirname}/assets/data/sports.json`);
 var clock;
 
 
@@ -20,16 +18,10 @@ ipcRenderer.on('init', function(event, data){
 });
 
 //Add Point
-ipcRenderer.on('addPoint', function(event, data) {
-    var current = Number(document.getElementById(data.team).innerHTML);
-    document.getElementById(data.team).innerHTML = current + Number(data.points);
-});
+ipcRenderer.on('point', function(event, data) {
+  document.getElementById(data.team).innerHTML = Number(data.points);
+  });
 
-//Del Point
-ipcRenderer.on('delPoint', function(event, data) {
-    var current = Number(document.getElementById(data.team).innerHTML);
-    document.getElementById(data.team).innerHTML = current - Number(data.points);
-});
 
 //Set Quarter
 ipcRenderer.on('setQuarter', function(event, data) {
