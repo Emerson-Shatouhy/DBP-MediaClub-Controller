@@ -10,19 +10,33 @@ $(document).ready(function() {
 
 });
 //All IPCs
+
+//Initialization of Scoreboard
+ipcRenderer.on('init', function(event, data){
+  document.getElementById("Clock").innerHTML = data.startTime;
+  document.getElementById("otherTeam").innerHTML = data.otherName;
+   document.getElementById("otherTeam").style.background = data.otherColor;
+   document.getElementById("Quarter").innerHTML = "Q1";
+});
+
+//Add Point
 ipcRenderer.on('addPoint', function(event, data) {
     var current = Number(document.getElementById(data.team).innerHTML);
     document.getElementById(data.team).innerHTML = current + Number(data.points);
 });
 
+//Del Point
 ipcRenderer.on('delPoint', function(event, data) {
     var current = Number(document.getElementById(data.team).innerHTML);
     document.getElementById(data.team).innerHTML = current - Number(data.points);
 });
+
+//Set Quarter
 ipcRenderer.on('setQuarter', function(event, data) {
   document.getElementById("Quarter").innerHTML = data.quarter;
 });
 
+//Clock Controls
 ipcRenderer.on('clock', function(event, data) {
     if(data.action == 'start'){
       if (!clock) {
@@ -44,11 +58,12 @@ ipcRenderer.on('clock', function(event, data) {
           else
           document.getElementById("Clock").innerHTML = data.newTime;
         }
+
 });
-//End IPCs
+
 //Functions Start
 
-//Clock Controls
+//Clock Controller
 function clockSet(){
   let current = document.getElementById("Clock").innerHTML;
   let split = current.indexOf(':')
@@ -79,18 +94,13 @@ function clockSet(){
 }
 }
 
-
+//Clock Starter
 function clockStart(){
    if (!clock) {
   var func = clockSet;
   clock = setInterval(func, 1000);
 }
 }
-
-
-
-
-
 
 //Sleep Function
 function sleep(milliseconds) {

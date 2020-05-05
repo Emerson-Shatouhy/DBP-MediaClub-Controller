@@ -3,9 +3,12 @@ const electron = require('electron')
 const ipcRenderer = electron.ipcRenderer;
 const {desktopCapturer} = electron
 const path = require('path')
+var reader = new FileReader();
+const fs = require('fs');
 
 let config = editJsonFile(`${__dirname}/assets/data/sports.json`);
-
+let startTime = "0";
+let otherColor = "";
 //Opens Modal on Start
 $(document).ready(function() {
     $('#mainModal').modal('show')
@@ -15,15 +18,26 @@ $(document).ready(function() {
 //Modal Control
 function modalSubmit() {
     config.set("otherTeam", document.forms["modalForm"]["vistingTeam"].value);
+    otherColor = (document.forms["modalForm"]["otherColor"].value);
     var current = document.getElementById("opponent").innerHTML;
     document.getElementById("opponent").innerHTML = config.get("otherTeam") + " " + current;
     config.set("boscoScore", 0);
     config.set("otherScore", 0);
-
+    if(document.forms["modalForm"]["sportControl"].value == "Football"){
+      document.getElementById("clockSet").value = "15:00";
+      startTime = "15:00";
+    }
+    else if(document.forms["modalForm"]["sportControl"].value == "Soccer"){
+      document.getElementById("clockSet").value = "15:00";
+      startTime = "15:00";
+    }
+    else if(document.forms["modalForm"]["sportControl"].value == "Soccer"){
+      document.getElementById("clockSet").value = "12:00";
+      startTime = "12:00";
+    }
     $('#mainModal').modal('hide')
-//Send Info, Make Output Window
-    ipcRenderer.invoke('init', config.get("otherTeam"));
-    sleep(2000);
+    ipcRenderer.invoke('start');
+    sleep(1000);
     desktopCapturer.getSources({
         types: ['window', 'screen']
     }).then(async sources => {
@@ -61,6 +75,7 @@ function modalSubmit() {
     function handleError(e) {
         console.log(e)
     }
+    ipcRenderer.invoke('init', config.get("otherTeam"), startTime, otherColor);
 }
 
 //Output Control
@@ -87,8 +102,7 @@ function clock(arg){
 
 //Clock Done Alert
 ipcRenderer.on('clockDone', function(event) {
-  console.log("Done")
-$('.alert').alert()
+  document.getElementById("clockSet").removeAttribute('disabled');
 });
 
 //Current Time
@@ -96,6 +110,11 @@ ipcRenderer.on('currentTime', function(event, data) {
 var newTime = data.min + ":" + data.sec;
 document.getElementById("clockSet").value = newTime.toString();
 });
+
+//Set Quarter
+function quarter(){
+ipcRenderer.invoke('setQuarter', document.getElementById("quarterSet").value);
+}
 
 //Add Points
 function addOne(team) {
@@ -112,6 +131,7 @@ function addOne(team) {
     }
 }
 
+//Add 2 Points
 function addTwo(team) {
     if (team == "bosco") {
         document.getElementById("boscoScore").innerHTML = config.get("boscoScore") + 2;
@@ -126,6 +146,7 @@ function addTwo(team) {
     }
 }
 
+//Add 3 Points
 function addThree(team) {
     if (team == "bosco") {
         document.getElementById("boscoScore").innerHTML = config.get("boscoScore") + 3;
@@ -183,7 +204,7 @@ function removeThree(team) {
     }
 }
 
-
+//File Reader
 //Sleep Function
 function sleep(milliseconds) {
     var start = new Date().getTime();
