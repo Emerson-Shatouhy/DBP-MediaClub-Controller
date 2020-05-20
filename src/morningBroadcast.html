@@ -1,48 +1,162 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <link rel="stylesheet" href="./assets/css/main.css">
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <meta charset="UTF-8">
     <title>DBP Media Club Media System || Morning Broadcast</title>
     <!-- https://electronjs.org/docs/tutorial/security#csp-meta-tag -->
-  <!-- Nav Bar -->
+    <!-- Nav Bar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">Don Bosco Prep Media Club</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link" href="index.html">Home</a>
-        </li>
-        <li class="nav-item active">
-          <a class="nav-link" href="morningBroadcast.html">Morning Broadcast<span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="sports.html">Sports</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="mass.html" >Mass</a>
-        </li>
-      </ul>
-    </div>
-  </nav>
+        <a class="navbar-brand" href="#">Don Bosco Prep Media Club</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">Home</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="morningBroadcast.html">Morning Broadcast<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="sports.html">Sports</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="mass.html">Mass</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
 </head>
+
 <body>
-<!-- Page Content -->
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="mainModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Run Down</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Form for Info -->
+                    <div class="container">
+                        <ul id="rundownList" class="list-group">
+                            <li class="list-group-item" id="item0">
+                                <div class="input-group-prepend">
+                                    <input type="text" value="Pre-Show" class="form-control" placeholder="Segment Name" aria-label="Segment Name" aria-describedby="basic-addon1">
+                                    <div class="form-group" style="margin-bottom: 0px;">
+                                        <select class="form-control" style="width: 7rem;">
+                                            <option>Graphic</option>
+                                            <option>Video</option>
+                                            <option>Live Shot</option>
+                                        </select>
+                                    </div>
+                                    <button type="button" class="btn btn-outline-danger delete" style="height: 2.35rem">Remove</button>
+                                </div>
+                            </li>
+                        </ul>
+                        <hr class="my-4">
+                        <button type="button" class="btn btn-primary float-left" onclick="newSegment()" id="newSegment">Add New</button>
+                        <button type="button" class="btn btn-success float-right" onclick="newRunDown()">Save</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <!-- Page Content -->
+    <p id="timeline">
+    <div class="card" id="liveShotTemp">
+        <span class="border border-light">
+            <div class="card-body" style="border">
+                <h4 class="card-title" id="cardTitle0">Segment Name<small class="text-muted" id="type"> Live Shot</small></h4>
+                <div class="btn-group" role="group" aria-label="Clock Control">
+                    <button type="button" class="btn btn-success" onclick="send()" id="send0">Send</button>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text" id="btnGroupAddon">Camera:</div>
+                            <div class="form-group" style="margin-bottom: 0px;">
+                                <select class="form-control" id="camSel">
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                    <option>6</option>
+                                    <option>7</option>
+                                    <option>8</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </span>
+    </div>
+
+    <div class="card" id="videoTemp">
+        <span class="border border-light">
+            <div class="card-body" style="border">
+                <h4 class="card-title" id="cardTitle0">Segment Name<small class="text-muted" id="type"> Video</small></h4>
+                <div class="btn-group" role="group" aria-label="Clock Control">
+                    <button type="button" class="btn btn-success" onclick="send()">Send</button>
+
+                </div>
+            </div>
+        </span>
+    </div>
+
+    <div class="card" id="graphicTemp">
+        <span class="border border-light">
+            <div class="card-body" style="border">
+                <h4 class="card-title" id="cardTitle0">Segment Name<small class="text-muted" id="type"> Graphic</small></h4>
+                <div class="btn-group" role="group" aria-label="Clock Control">
+                    <button type="button" class="btn btn-success" onclick="send()" id="send0">Send</button>
+
+
+                </div>
+            </div>
+        </span>
+    </div>
+
+
+    </p>
 
 
 
 
+    <!-- Output View -->
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <video id="output" height="100%" , width="100%"></video>
+            </div>
+        </div>
+    </div>
 
-<!-- Scripts Do Not Touch -->
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-<script src="./index.js"></script>
-  </body>
+
+
+
+    <!-- Scripts Do Not Touch -->
+    <script src="./assets/jquery-ui/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" integrity="sha256-KM512VNnjElC30ehFwehXjx1YCHPiQkOPmqnrWtpccM=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-sortablejs@latest/jquery-sortable.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="./morningBroadcast.js"></script>
+</body>
 
 </html>

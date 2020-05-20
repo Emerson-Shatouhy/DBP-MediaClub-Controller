@@ -92,7 +92,7 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col">
-      <center><h1>Scoreboard Control</h1></center>
+      <center><h1>Scoreboard Controls</h1></center>
       <hr class="my-3">
       <h2>Clock</h2>
       <div class="btn-group" role="group" aria-label="Clock Control">
@@ -112,23 +112,13 @@
         <div class="input-group-text" id="btnGroupAddon">Quarter:</div>
         </div>
         <input id="quarterSet" type="text" class="form-control" placeholder="Q1" aria-label="Input group example" aria-describedby="btnGroupAddon" value="Q1">
-</div></div>
-
-
-
-
-
-
-
-
-
-
-
-
+</div>
+</div>
+<hr class="my-3">
 <!--Points Buttons-->
       <div class="row">
           <div class="col">
-            <h2>Bosco <small class="text-muted" id="boscoScore">0</small></h2>
+            <h3>Bosco <small class="text-muted" id="boscoScore">0</small></h2>
             <div class="btn-group-lg" role="group" aria-label="Bosco Score">
         <button type="button" class="btn btn-success" onclick="points('bosco', '1', '+')">+1</button>
         <button type="button" class="btn btn-success" onclick="points('bosco', '2', '+')">+2</button>
@@ -140,7 +130,7 @@
       </div>
           </div>
           <div class="col">
-            <h2 id="opponent"><small class="text-muted" id="otherScore">0</small></h2>
+            <h3 id="opponent">Temp <small class="text-muted" id="otherScore">0</small></h2>
             <div class="btn-group-lg" role="group" aria-label="Opponent Score">
         <button type="button" class="btn btn-success" onclick="points('other', '1', '+')">+1</button>
         <button type="button" class="btn btn-success" onclick="points('other', '2', '+')">+2</button>
@@ -156,18 +146,82 @@
     </div>
     <div class="vl"></div>
     <div class="col">
+    <!-- Other Side-->
       <center><h1>Other</h1></center>
       <hr class="my-3">
+      <h2>Commentator Control</h2>
+      <div class="container">
+        <div class="row">
+    <div class="col">
+      <form>
+        <div class="input-group">
+            <div class="input-group-prepend">
+              <div class="input-group-text" id="btnGroupAddon">Commentator A Name:</div>
+              </div>
+              <input id="commentatorA" type="text" class="form-control" placeholder="Name" aria-describedby="btnGroupAddon">
+        </div>
+    </div>
+    <div class="col">
+      <div class="input-group">
+      <div class="input-group-prepend">
+        <div class="input-group-text" id="btnGroupAddon">Commentator A Secondary:</div>
+        </div>
+        <input id="commentatorA" type="text" class="form-control" placeholder="Other" aria-describedby="btnGroupAddon">
+      </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- B -->
+  <div class="row">
+    <div class="col">
+      <form>
+        <div class="input-group">
+            <div class="input-group-prepend">
+              <div class="input-group-text" id="btnGroupAddon">Commentator B Name:</div>
+              </div>
+              <input id="commentatorA" type="text" class="form-control" placeholder="Name" aria-describedby="btnGroupAddon">
+        </div>
+    </div>
+    <div class="col">
+      <div class="input-group">
+      <div class="input-group-prepend">
+        <div class="input-group-text" id="btnGroupAddon">Commentator B Secondary:</div>
+        </div>
+        <input id="commentatorB" type="text" class="form-control" placeholder="Other" aria-describedby="btnGroupAddon">
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="paddingTop">
+<center><button type="button" class="btn btn-primary" onclick="quarter()"><span style="padding-left: 1.5rem; padding-right: 1.5rem;">Set</span></button></center>
+</div>
+<br>
+<h2>Graphic Control</h2>
+<hr class="my-3">
+<div class="container">
+  <div class="row">
+<div class="col">
+<p>Main Scoreboard
+  <div class="btn-group" role="group" aria-label="Basic example">
+  <button type="button" class="btn btn-success">In</button>
+  <button type="button" class="btn btn-danger">Out</button>
+</div>
+</p>
+
+
+
+
+
+</div>
+</div>
+</div>
     </div>
   </div>
 </div>
 
-<img alt="..." id="logoTemp" class="img-thumbnail">
 
-<form runat="server">
-  <input type='file' id="imgInp" />
-  <img id="blah" src="#" alt="your image" />
-</form>
 
 
 <!-- Scripts Do Not Touch -->

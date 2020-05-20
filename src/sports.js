@@ -1,9 +1,7 @@
-const editJsonFile = require("edit-json-file");
 const electron = require('electron')
+const editJsonFile = require("edit-json-file");
 const ipcRenderer = electron.ipcRenderer;
 const {desktopCapturer} = electron
-const path = require('path')
-var reader = new FileReader();
 const fs = require('fs');
 
 let config = editJsonFile(`${__dirname}/assets/data/sports.json`);
@@ -116,6 +114,7 @@ function quarter(){
 ipcRenderer.invoke('setQuarter', document.getElementById("quarterSet").value);
 }
 
+//Point Control
 function points(team, points, action){
   var teamID = team + "Score";
   currentScore = Number(document.getElementById(teamID).innerHTML);
