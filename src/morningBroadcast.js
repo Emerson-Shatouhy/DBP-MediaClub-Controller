@@ -3,7 +3,8 @@ const editJsonFile = require("edit-json-file");
 const ipcRenderer = electron.ipcRenderer;
 const { desktopCapturer } = electron;
 let preset = editJsonFile(`${__dirname}/assets/data/broadcastPreset.json`);
-
+var curLive = 0;
+var curPreview = 0;
 
 //Create the Modal List
 var sortable = Sortable.create(rundownList, {
@@ -74,86 +75,89 @@ $(document).ready(function() {
 function newRunDown() {
     var sel = document.getElementById("rundownList").getElementsByTagName("select");
     var lis = document.getElementById("rundownList").getElementsByTagName("input");
+    var factor = 0;
     for (i = 0; i < lis.length; i++) {
         if (lis[i].value) {
-            newCard(lis[i].value, i, sel[i].value);
+            newCard(lis[i].value, i - factor, sel[i].value);
+        } else {
+          factor += 1;
         }
     }
-    var liveShotTemp = document.getElementById("liveShotTemp");
-    liveShotTemp.parentNode.removeChild(liveShotTemp);
-    var graphicTemp = document.getElementById("graphicTemp");
-    graphicTemp.parentNode.removeChild(graphicTemp);
-    var videoTemp = document.getElementById("videoTemp");
-    videoTemp.parentNode.removeChild(videoTemp);
+    document.getElementById("tempListItm").parentNode.removeChild(tempListItm);
+    document.getElementById("optionList").removeChild(tempLiveShotText);
+    document.getElementById("optionList").removeChild(tempGraphicText);
+    document.getElementById("optionList").removeChild(tempVideoText);
     $('#mainModal').modal('hide')
 }
 
-//Handles the creation of New Cards
+//New Cards
 function newCard(name, index, type) {
-    switch (type) {
-        case "Live Shot":
-            var itm = document.getElementById("liveShotTemp");
-            var cln = itm.cloneNode(true);
-            cln.id = index;
-            var body = cln.firstElementChild.firstElementChild;
-            var header = body.firstElementChild;
-            header.innerHTML = name;
-            header.id = "cardTitle" + index;
-            var button = body.lastElementChild.firstElementChild;
-            button.id = "btn" + index;
-            button.setAttribute("onClick", `send('liveShot', ${index})`);
-            var select = body.lastElementChild.lastElementChild.lastElementChild.lastElementChild.lastElementChild;
-            select.id = "sel" + index;
-            var typ = document.createElement("small");
-            typ.classList.add("text-muted");
+  var itemList = document.getElementById("timeline");
+  var optionsList = document.getElementById("optionList");
+  var tempListItm = document.getElementById("tempListItm");
+  var tempLiveShotText = document.getElementById("tempLiveShotText");
+  var tempGraphicText = document.getElementById("tempGraphicText");
+  var tempVideoText = document.getElementById("tempVideoText");
+  switch (type) {
+    case "Live Shot":
+      var newItemListItm = tempListItm.cloneNode(true);
+      var newLiveShotText = tempLiveShotText.cloneNode(true);
+      //Make New Item in Rundown
+      newItemListItm.innerHTML = name;
+      newItemListItm.id = index;
+      newItemListItm.href = "#" + "list-" + index;
+      var typ = document.createElement("small");
             typ.innerHTML = " " + type;
-            header.appendChild(typ);
-            document.getElementById("timeline").appendChild(cln);
-            break;
+            newItemListItm.appendChild(typ);
+
+      itemList.appendChild(newItemListItm);
+      //Make New Item for Options
+      newLiveShotText.id = "list-" + index;
+      //newLiveShotText.innerHTML = index + " TEXT " + type;
+
+      optionsList.appendChild(newLiveShotText);
+      break;
+      case "Video":
+        var newItemListItm = tempListItm.cloneNode(true);
+        var newVideoText = tempVideoText.cloneNode(true);
+        //Make New Item in Rundown
+        newItemListItm.innerHTML = name;
+        newItemListItm.id = index;
+        newItemListItm.href = "#" + "list-" + index;
+        var typ = document.createElement("small");
+              typ.innerHTML = " " + type;
+              newItemListItm.appendChild(typ);
+
+        itemList.appendChild(newItemListItm);
+        //Make New Item for Options
+        newVideoText.id = "list-" + index;
+        newVideoText.innerHTML = index + " TEXT " + type;
+        optionsList.appendChild(newVideoText);
+        break;
 
         case "Graphic":
-            var itm = document.getElementById("graphicTemp");
-            var cln = itm.cloneNode(true);
-            cln.id = index;
-            var body = cln.firstElementChild.firstElementChild;
-            var header = body.firstElementChild;
-            header.innerHTML = name;
-            header.id = "cardTitle" + index;
-            var button = body.lastElementChild.lastElementChild;
-            button.setAttribute("onClick", `send('graphic', ${index})`);
-            button.id = "btn" + index;
-            var typ = document.createElement("small");
-            typ.classList.add("text-muted");
-            typ.innerHTML = " " + type;
-            header.appendChild(typ);
-            document.getElementById("timeline").appendChild(cln);
-            break;
+          var newItemListItm = tempListItm.cloneNode(true);
+          var newGraphicText = tempGraphicText.cloneNode(true);
+          //Make New Item in Rundown
+          newItemListItm.innerHTML = name;
+          newItemListItm.id = index;
+          newItemListItm.href = "#" + "list-" + index;
+          var typ = document.createElement("small");
+                typ.innerHTML = " " + type;
+                newItemListItm.appendChild(typ);
 
+          itemList.appendChild(newItemListItm);
+          //Make New Item for Options
+          newGraphicText.id = "list-" + index;
+          newGraphicText.innerHTML = index + " TEXT " + type;
+          optionsList.appendChild(newGraphicText);
+          break;
 
-        case "Video":
-            var itm = document.getElementById("videoTemp");
-            var cln = itm.cloneNode(true);
-            cln.id = index;
-            var body = cln.firstElementChild.firstElementChild;
-            var header = body.firstElementChild;
-            header.innerHTML = name;
-            header.id = "cardTitle" + index;
-            var button = body.lastElementChild.lastElementChild;
-            button.setAttribute("onClick", `send('video', ${index})`);
-            button.id = "btn" + index;
-            var typ = document.createElement("small");
-            typ.classList.add("text-muted");
-            typ.innerHTML = " " + type;
-            header.appendChild(typ);
-            document.getElementById("timeline").appendChild(cln);
-            break;
-    }
+  }
 
 }
 
-const {
-    Atem
-} = require('atem-connection')
+const { Atem } = require('atem-connection')
 const myAtem = new Atem({
     externalLog: console.log
 })
@@ -172,85 +176,33 @@ myAtem.on('connected', () => {
     })
 })
 
-
-
-//Handles Send Function
-function send(type, index) {
-    if (document.getElementById(index - 1 + "-live")) {
-        var old = document.getElementById(index - 1 + "-live");
-        var oldB = document.getElementById(index - 1 + "-live").firstElementChild;
-        old.id = index - 1 + "-old";
-        oldB.classList.remove("border-danger");
-        oldB.classList.add("border-light");
-        var button = document.getElementById("btn" + index);
-        button.setAttribute('disabled', 'true');
-    }
-
-    switch (type) {
-        case "liveShot":
-            if (document.getElementById(index + "-preview")) {
-                var border = document.getElementById(index + "-preview").firstElementChild;
-                document.getElementById(index + "-preview").id = index + "-live";
-                border.classList.remove("border-light");
-                border.classList.add("border-danger");
-                myAtem.autoTransition();
-                break;
-            } else if (document.getElementById(index)) {
-                var border = document.getElementById(index).firstElementChild;
-                document.getElementById(index).id = index + "-live";
-                border.classList.remove("border-light");
-                border.classList.add("border-danger");
-                myAtem.autoTransition();
-            }
-            break;
-        case "graphic":
-            if (document.getElementById(index + "-preview")) {
-                var border = document.getElementById(index + "-preview").firstElementChild;
-                document.getElementById(index + "-preview").id = index + "-live";
-                border.classList.remove("border-light");
-                border.classList.add("border-danger");
-                myAtem.autoTransition();
-                break;
-            } else if (document.getElementById(index)) {
-                var border = document.getElementById(index).firstElementChild;
-                document.getElementById(index).id = index + "-live";
-                border.classList.remove("border-light");
-                border.classList.add("border-danger");
-                myAtem.autoTransition();
-            } else
-                break;
-        case "video":
-            if (document.getElementById(index + "-preview")) {
-                var border = document.getElementById(index + "-preview").firstElementChild;
-                document.getElementById(index + "-preview").id = index + "-live";
-                border.classList.remove("border-light");
-                border.classList.add("border-danger");
-                myAtem.autoTransition();
-                break;
-            } else if (document.getElementById(index)) {
-                var border = document.getElementById(index).firstElementChild;
-                document.getElementById(index).id = index + "-live";
-                border.classList.remove("border-light");
-                border.classList.add("border-danger");
-                myAtem.autoTransition();
-            }
-            break;
-
-    }
-    var button = document.getElementById("btn" + index);
-    button.setAttribute('disabled', 'true');
-    preview(index + 1);
+function next(){
+if(document.getElementById(curPreview + "-preview")){
+var currPre = document.getElementById(curPreview + "-preview");
+var currLive = document.getElementById(curLive + "-live");
+var newPre = document.getElementById(curPreview + 1);
+currLive.classList.remove("list-group-item-danger");
+//Trigger Graphic Here
+currPre.classList.remove("list-group-item-success");
+currPre.classList.add("list-group-item-danger");
+currPre.id = curLive+1 + "-live";
+currLive.id = curLive + "-old";
+if(newPre){
+newPre.id = curPreview + 1 + "-preview";
+newPre.classList.add("list-group-item-success");
+curPreview++;
+} else {
+document.getElementById("nextBtn").setAttribute('disabled','true');
 }
+curLive++;
 
-
-//Handles all Preview Control
-function preview(index) {
-    var next = document.getElementById(index);
-    if (document.getElementById(index)) {
-        var border = document.getElementById(index).firstElementChild;
-        next.id = index + "-preview";
-
-        border.classList.remove("border-light");
-        border.classList.add("border-success");
-    }
+} else {
+var live = document.getElementById("0");
+live.id = "0-live";
+live.classList.add("list-group-item-danger");
+var preview = document.getElementById("1");
+preview.classList.add("list-group-item-success");
+preview.id = "1-preview";
+curPreview++;
+}
 }

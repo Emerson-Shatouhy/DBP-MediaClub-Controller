@@ -6,6 +6,7 @@
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <meta charset="UTF-8">
+    <script src="https://kit.fontawesome.com/d1450878f8.js" crossorigin="anonymous"></script>
     <title>DBP Media Club Media System || Morning Broadcast</title>
     <!-- https://electronjs.org/docs/tutorial/security#csp-meta-tag -->
     <!-- Nav Bar -->
@@ -74,66 +75,74 @@
         </div>
     </div>
     </div>
-
+<!-- Above Timeline -->
+<center>
+<div class="btn-group" role="group" aria-label="Basic example">
+  <button type="button" class="btn btn-primary" onclick="prev()"><i class="fas fa-arrow-left"></i></button>
+  <button type="button" class="btn btn-primary" onclick="auto()">Auto</button>
+  <button type="button" class="btn btn-primary" onclick="next()" id="nextBtn"><i class="fas fa-arrow-right"></i></button>
+</div>
+</center>
     <!-- Page Content -->
-    <p id="timeline">
-    <div class="card" id="liveShotTemp">
-        <span class="border border-light">
-            <div class="card-body" style="border">
-                <h4 class="card-title" id="cardTitle0">Segment Name<small class="text-muted" id="type"> Live Shot</small></h4>
-                <div class="btn-group" role="group" aria-label="Clock Control">
-                    <button type="button" class="btn btn-success" onclick="send()" id="send0">Send</button>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <div class="input-group-text" id="btnGroupAddon">Camera:</div>
-                            <div class="form-group" style="margin-bottom: 0px;">
-                                <select class="form-control" id="camSel">
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                    <option>5</option>
-                                    <option>6</option>
-                                    <option>7</option>
-                                    <option>8</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
+    <hr class="my-1">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col">
+          <center><h1>Run Down</h1></center>
+          <hr class="my-1">
+      <div class="list-group" id="timeline" role="tablist">
+       <a class="list-group-item list-group-item-action" id="tempListItm" data-toggle="list" href="#list-0" role="tab" aria-controls="home">Segment Name<small> Video</small></a>
+     </div>
+     </div>
+<div class="vl" style=""></div>
+<div class="col">
+  <center><h1>Options</h1></center>
+  <hr class="my-1">
+  <div class="tab-content" id="optionList">
+    <!-- LIVE SHOT OPTIONS TEMPLATE -->
+        <div class="tab-pane fade" id="tempLiveShotText" role="tabpanel" aria-labelledby="list-home-list">
+            <!-- Camera Selector -->
+            <div class="form-group">
+            <h3> Camera Settings </h3>
+              <select class="form-control" id="cameraSelect" style="width: 4rem;">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+                <option>7</option>
+                <option>8</option>
+              </select>
             </div>
-        </span>
-    </div>
-
-    <div class="card" id="videoTemp">
-        <span class="border border-light">
-            <div class="card-body" style="border">
-                <h4 class="card-title" id="cardTitle0">Segment Name<small class="text-muted" id="type"> Video</small></h4>
-                <div class="btn-group" role="group" aria-label="Clock Control">
-                    <button type="button" class="btn btn-success" onclick="send()">Send</button>
-
-                </div>
+            <hr class="my-2">
+            <!-- Name Input -->
+            <h3> Text </h3>
+            <div class="form-group">
+              <h5> Left </h5>
+                  <textarea class="form-control" aria-label="With textarea" id="leftText"></textarea>
+                  <h5> Center </h5>
+                      <textarea class="form-control" aria-label="With textarea" id="centerText"></textarea>
+                      <h5> Right </h5>
+                          <textarea class="form-control" aria-label="With textarea" id="rightText"></textarea>
             </div>
-        </span>
-    </div>
-
-    <div class="card" id="graphicTemp">
-        <span class="border border-light">
-            <div class="card-body" style="border">
-                <h4 class="card-title" id="cardTitle0">Segment Name<small class="text-muted" id="type"> Graphic</small></h4>
-                <div class="btn-group" role="group" aria-label="Clock Control">
-                    <button type="button" class="btn btn-success" onclick="send()" id="send0">Send</button>
+        </div>
+        <!-- GRAPHICS OPTIONS TEMPLATE -->
+        <div class="tab-pane fade" id="tempGraphicText" role="tabpanel" aria-labelledby="list-profile-list" id="tempGraphicText">
+          <h2></h2>
 
 
-                </div>
-            </div>
-        </span>
-    </div>
+        </div>
+        <!-- VIDEO OPTIONS TEMPLATE -->
+        <div class="tab-pane fade" id="tempVideoText" role="tabpanel" aria-labelledby="list-messages-list" id="tempVideoText">
+          <h2></h2>
 
 
-    </p>
 
+        </div>
+      </div>
+</div>
+</div>
 
 
 
