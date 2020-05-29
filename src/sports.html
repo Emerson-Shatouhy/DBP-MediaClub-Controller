@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <link rel="stylesheet" href="./assets/css/main.css">
-    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <meta charset="UTF-8">
-    <title>DBP Media Club Media System || Sports</title>
-    <!-- https://electronjs.org/docs/tutorial/security#csp-meta-tag -->
+
+<head>
+  <link rel="stylesheet" href="./assets/css/main.css">
+  <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <meta charset="UTF-8">
+  <title>DBP Media Club Media System || Sports</title>
+  <!-- https://electronjs.org/docs/tutorial/security#csp-meta-tag -->
   <!-- Nav Bar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="#">Don Bosco Prep Media Club</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -25,210 +26,216 @@
           <a class="nav-link" href="sports.html">Sports<span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="mass.html" >Mass</a>
+          <a class="nav-link" href="mass.html">Mass</a>
         </li>
       </ul>
     </div>
   </nav>
 </head>
+
 <body>
-<!-- Modal -->
-<div class="modal fade" id="mainModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Inital Setup</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+  <!-- Modal -->
+  <div class="modal fade" id="mainModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Inital Setup</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <!-- Form for Info -->
+          <form id="modalForm" action="#" onsubmit="modalSubmit();return false">
+            <div class="form-group">
+              <label for="sportControl">Sport:</label>
+              <select name="sport" class="form-control" id="sportControl">
+                <option>Football</option>
+                <option>Soccer</option>
+                <option>Basketball</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="formGroupExampleInput">Visting Team</label>
+              <input name="vistingTeam" type="text" class="form-control" id="formGroupExampleInput" placeholder="Team Name">
+            </div>
+            <label for="otherColor">Visiting Team Color</label>
+            <div class="form-group">
+              <input type="color" id="otherColor" name="otherTeamColor" value="#e66465">
+            </div>
+            <label for="otherTeamLogo">Visiting Team Logo</label>
+            <div class="input-group mb-3">
+              <div class="custom-file">
+                <input type="file" accept="image/*" class="custom-file-input" id="otherTeamLogo">
+                <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+              </div>
+            </div>
+            <input type="submit" class="btn btn-primary" value="Submit">
+          </form>
+        </div>
       </div>
-      <div class="modal-body">
-    <!-- Form for Info -->
-    <form id="modalForm" action="#" onsubmit="modalSubmit();return false">
-      <div class="form-group">
-          <label for="sportControl">Sport:</label>
-          <select name="sport" class="form-control" id="sportControl">
-            <option>Football</option>
-            <option>Soccer</option>
-            <option>Basketball</option>
-          </select>
-        </div>
-        <div class="form-group">
-  <label for="formGroupExampleInput">Visting Team</label>
-  <input  name="vistingTeam"type="text" class="form-control" id="formGroupExampleInput" placeholder="Team Name">
-</div>
-<label for="otherColor">Visiting Team Color</label>
-<div class="form-group">
-<input type="color" id="otherColor" name="otherTeamColor"value="#e66465">
-</div>
-<label for="otherTeamLogo">Visiting Team Logo</label>
-<div class="input-group mb-3">
-  <div class="custom-file">
-    <input type="file" accept="image/*" class="custom-file-input" id="otherTeamLogo">
-    <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-  </div>
-</div>
-      <input type="submit" class="btn btn-primary" value="Submit">
-    </form>
-  </div>
-</div>
-</div>
-</div>
-<!-- Alerts -->
-
-
-
-<!-- Output Video -->
-<div class="container">
-  <div class="row">
-    <div class="col">
-      <video id="output" height="100%", width="100%"></video>
     </div>
   </div>
-</div>
+  <!-- Alerts -->
 
-<!-- Page Content -->
-<hr class="my-3">
-<div class="container-fluid">
-  <div class="row">
-    <div class="col">
-      <center><h1>Scoreboard Controls</h1></center>
-      <hr class="my-3">
-      <h2>Clock</h2>
-      <div class="btn-group" role="group" aria-label="Clock Control">
-        <button type="button" class="btn btn-success" onclick="clock('start')">Start</button>
-        <button type="button" class="btn btn-danger" onclick="clock('stop')">Stop</button>
-        <button type="button" class="btn btn-primary" onclick="clock('set')">Set</button>
-        <div class="input-group">
-    <div class="input-group-prepend">
-      <div class="input-group-text" id="btnGroupAddon">Time:</div>
+
+
+  <!-- Output Video -->
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <video id="output" height="100%" , width="100%"></video>
+      </div>
     </div>
-    <input id="clockSet" type="text" class="form-control" placeholder="MM:SS" aria-label="Input group example" aria-describedby="btnGroupAddon" value="12:00">
-  </div></div>
-  <div class="btn-group" role="group" aria-label="Clock Control">
-  <div class="input-group">
-    <button type="button" class="btn btn-primary" onclick="quarter()">Set</button>
-      <div class="input-group-prepend">
-        <div class="input-group-text" id="btnGroupAddon">Quarter:</div>
+  </div>
+
+  <!-- Page Content -->
+  <hr class="my-3">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col">
+        <center>
+          <h1>Scoreboard Controls</h1>
+        </center>
+        <hr class="my-3">
+        <h2>Clock</h2>
+        <div class="btn-group" role="group" aria-label="Clock Control">
+          <button type="button" class="btn btn-success" onclick="clock('start')">Start</button>
+          <button type="button" class="btn btn-danger" onclick="clock('stop')">Stop</button>
+          <button type="button" class="btn btn-primary" onclick="clock('set')">Set</button>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <div class="input-group-text" id="btnGroupAddon">Time:</div>
+            </div>
+            <input id="clockSet" type="text" class="form-control" placeholder="MM:SS" aria-label="Input group example" aria-describedby="btnGroupAddon" value="12:00">
+          </div>
         </div>
-        <input id="quarterSet" type="text" class="form-control" placeholder="Q1" aria-label="Input group example" aria-describedby="btnGroupAddon" value="Q1">
-</div>
-</div>
-<hr class="my-3">
-<!--Points Buttons-->
-      <div class="row">
+        <div class="btn-group" role="group" aria-label="Clock Control">
+          <div class="input-group">
+            <button type="button" class="btn btn-primary" onclick="quarter()">Set</button>
+            <div class="input-group-prepend">
+              <div class="input-group-text" id="btnGroupAddon">Quarter:</div>
+            </div>
+            <input id="quarterSet" type="text" class="form-control" placeholder="Q1" aria-label="Input group example" aria-describedby="btnGroupAddon" value="Q1">
+          </div>
+        </div>
+        <hr class="my-3">
+        <!--Points Buttons-->
+        <div class="row">
           <div class="col">
             <h3>Bosco <small class="text-muted" id="boscoScore">0</small></h2>
-            <div class="btn-group-lg" role="group" aria-label="Bosco Score">
-        <button type="button" class="btn btn-success" onclick="points('bosco', '1', '+')">+1</button>
-        <button type="button" class="btn btn-success" onclick="points('bosco', '2', '+')">+2</button>
-        <button type="button"  class="btn btn-success" onclick="points('bosco', '3', '+')">+3</button>
-        <br><br>
-        <button type="button" class="btn btn-danger" onclick="points('bosco', '1', '-')">-1</button>
-        <button type="button" class="btn btn-danger" onclick="points('bosco', '2', '-')">-2</button>
-        <button type="button" class="btn btn-danger" onclick="points('bosco', '3', '-')">-3</button>
-      </div>
+              <div class="btn-group-lg" role="group" aria-label="Bosco Score">
+                <button type="button" class="btn btn-success" onclick="points('bosco', '1', '+')">+1</button>
+                <button type="button" class="btn btn-success" onclick="points('bosco', '2', '+')">+2</button>
+                <button type="button" class="btn btn-success" onclick="points('bosco', '3', '+')">+3</button>
+                <br><br>
+                <button type="button" class="btn btn-danger" onclick="points('bosco', '1', '-')">-1</button>
+                <button type="button" class="btn btn-danger" onclick="points('bosco', '2', '-')">-2</button>
+                <button type="button" class="btn btn-danger" onclick="points('bosco', '3', '-')">-3</button>
+              </div>
           </div>
           <div class="col">
             <h3 id="opponent">Temp <small class="text-muted" id="otherScore">0</small></h2>
-            <div class="btn-group-lg" role="group" aria-label="Opponent Score">
-        <button type="button" class="btn btn-success" onclick="points('other', '1', '+')">+1</button>
-        <button type="button" class="btn btn-success" onclick="points('other', '2', '+')">+2</button>
-        <button type="button" class="btn btn-success" onclick="points('other', '3', '+')">+3</button>
-        <br><br>
-        <button type="button" class="btn btn-danger" onclick="points('other', '1', '-')">-1</button>
-        <button type="button" class="btn btn-danger" onclick="points('other', '2', '-')">-2</button>
-        <button type="button" class="btn btn-danger" onclick="points('other', '3', '-')">-3</button>
-      </div>
+              <div class="btn-group-lg" role="group" aria-label="Opponent Score">
+                <button type="button" class="btn btn-success" onclick="points('other', '1', '+')">+1</button>
+                <button type="button" class="btn btn-success" onclick="points('other', '2', '+')">+2</button>
+                <button type="button" class="btn btn-success" onclick="points('other', '3', '+')">+3</button>
+                <br><br>
+                <button type="button" class="btn btn-danger" onclick="points('other', '1', '-')">-1</button>
+                <button type="button" class="btn btn-danger" onclick="points('other', '2', '-')">-2</button>
+                <button type="button" class="btn btn-danger" onclick="points('other', '3', '-')">-3</button>
+              </div>
 
           </div>
         </div>
-    </div>
-    <div class="vl"></div>
-    <div class="col">
-    <!-- Other Side-->
-      <center><h1>Other</h1></center>
-      <hr class="my-3">
-      <h2>Commentator Control</h2>
-      <div class="container">
-        <div class="row">
-    <div class="col">
-      <form>
-        <div class="input-group">
-            <div class="input-group-prepend">
-              <div class="input-group-text" id="btnGroupAddon">Commentator A Name:</div>
-              </div>
-              <input id="commentatorA" type="text" class="form-control" placeholder="Name" aria-describedby="btnGroupAddon">
-        </div>
-    </div>
-    <div class="col">
-      <div class="input-group">
-      <div class="input-group-prepend">
-        <div class="input-group-text" id="btnGroupAddon">Commentator A Secondary:</div>
-        </div>
-        <input id="commentatorA" type="text" class="form-control" placeholder="Other" aria-describedby="btnGroupAddon">
       </div>
-      </form>
-    </div>
-  </div>
-
-  <!-- B -->
-  <div class="row">
-    <div class="col">
-      <form>
-        <div class="input-group">
-            <div class="input-group-prepend">
-              <div class="input-group-text" id="btnGroupAddon">Commentator B Name:</div>
+      <div class="vl"></div>
+      <div class="col">
+        <!-- Other Side-->
+        <center>
+          <h1>Other</h1>
+        </center>
+        <hr class="my-3">
+        <h2>Commentator Control</h2>
+        <div class="container">
+          <div class="row">
+            <div class="col">
+              <form>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text" id="btnGroupAddon">Commentator A Name:</div>
+                  </div>
+                  <input id="commentatorA" type="text" class="form-control" placeholder="Name" aria-describedby="btnGroupAddon">
+                </div>
+            </div>
+            <div class="col">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <div class="input-group-text" id="btnGroupAddon">Commentator A Secondary:</div>
+                </div>
+                <input id="commentatorA" type="text" class="form-control" placeholder="Other" aria-describedby="btnGroupAddon">
               </div>
-              <input id="commentatorA" type="text" class="form-control" placeholder="Name" aria-describedby="btnGroupAddon">
+              </form>
+            </div>
+          </div>
+
+          <!-- B -->
+          <div class="row">
+            <div class="col">
+              <form>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text" id="btnGroupAddon">Commentator B Name:</div>
+                  </div>
+                  <input id="commentatorA" type="text" class="form-control" placeholder="Name" aria-describedby="btnGroupAddon">
+                </div>
+            </div>
+            <div class="col">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <div class="input-group-text" id="btnGroupAddon">Commentator B Secondary:</div>
+                </div>
+                <input id="commentatorB" type="text" class="form-control" placeholder="Other" aria-describedby="btnGroupAddon">
+              </div>
+              </form>
+            </div>
+          </div>
         </div>
-    </div>
-    <div class="col">
-      <div class="input-group">
-      <div class="input-group-prepend">
-        <div class="input-group-text" id="btnGroupAddon">Commentator B Secondary:</div>
+        <div class="paddingTop">
+          <center><button type="button" class="btn btn-primary" onclick="quarter()"><span style="padding-left: 1.5rem; padding-right: 1.5rem;">Set</span></button></center>
         </div>
-        <input id="commentatorB" type="text" class="form-control" placeholder="Other" aria-describedby="btnGroupAddon">
+        <br>
+        <h2>Graphic Control</h2>
+        <hr class="my-3">
+        <div class="container">
+          <div class="row">
+            <div class="col">
+              <p>Main Scoreboard
+              <div class="btn-group" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-success">In</button>
+                <button type="button" class="btn btn-danger">Out</button>
+              </div>
+              </p>
+
+
+
+
+
+            </div>
+          </div>
+        </div>
       </div>
-      </form>
     </div>
   </div>
-</div>
-<div class="paddingTop">
-<center><button type="button" class="btn btn-primary" onclick="quarter()"><span style="padding-left: 1.5rem; padding-right: 1.5rem;">Set</span></button></center>
-</div>
-<br>
-<h2>Graphic Control</h2>
-<hr class="my-3">
-<div class="container">
-  <div class="row">
-<div class="col">
-<p>Main Scoreboard
-  <div class="btn-group" role="group" aria-label="Basic example">
-  <button type="button" class="btn btn-success">In</button>
-  <button type="button" class="btn btn-danger">Out</button>
-</div>
-</p>
 
 
 
 
-
-</div>
-</div>
-</div>
-    </div>
-  </div>
-</div>
-
-
-
-
-<!-- Scripts Do Not Touch -->
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-<script src="./sports.js"></script>
-  </body>
+  <!-- Scripts Do Not Touch -->
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  <script src="./sports.js"></script>
+</body>
 
 </html>
