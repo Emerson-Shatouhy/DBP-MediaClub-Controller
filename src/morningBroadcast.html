@@ -4,7 +4,9 @@
 <head>
   <link rel="stylesheet" href="./assets/css/main.css">
   <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link href="assets/images">
   <meta charset="UTF-8">
   <script src="https://kit.fontawesome.com/d1450878f8.js" crossorigin="anonymous"></script>
   <title>DBP Media Club Media System || Morning Broadcast</title>
@@ -12,7 +14,8 @@
   <!-- Nav Bar -->
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="#">Don Bosco Prep Media Club</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
@@ -35,10 +38,10 @@
 </head>
 
 <body>
-
-
+  <canvas id="myCanvas"></canvas>
   <!-- Modal -->
-  <div class="modal fade" id="mainModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="mainModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -53,7 +56,8 @@
             <ul id="rundownList" class="list-group">
               <li class="list-group-item" id="item0">
                 <div class="input-group-prepend">
-                  <input type="text" value="Pre-Show" class="form-control" placeholder="Segment Name" aria-label="Segment Name" aria-describedby="basic-addon1">
+                  <input type="text" value="Pre-Show" class="form-control" placeholder="Segment Name"
+                    aria-label="Segment Name" aria-describedby="basic-addon1">
                   <div class="form-group" style="margin-bottom: 0px;">
                     <select class="form-control" style="width: 7rem;">
                       <option>Graphic</option>
@@ -66,7 +70,8 @@
               </li>
             </ul>
             <hr class="my-4">
-            <button type="button" class="btn btn-primary float-left" onclick="newSegment()" id="newSegment">Add New</button>
+            <button type="button" class="btn btn-primary float-left" onclick="newSegment()" id="newSegment">Add
+              New</button>
             <button type="button" class="btn btn-success float-right" onclick="newRunDown()">Save</button>
           </div>
         </div>
@@ -75,12 +80,20 @@
     </div>
   </div>
   </div>
+
+  <!-- Alerts -->
+  <div class="alert alert-success" role="alert" id="status">
+    <p id="statusText"></p>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
   <!-- Above Timeline -->
   <center>
     <div class="btn-group" role="group" aria-label="Basic example">
-      <button type="button" class="btn btn-primary" onclick="prev()"><i class="fas fa-arrow-left"></i></button>
       <button type="button" class="btn btn-primary" onclick="auto()">Auto</button>
-      <button type="button" class="btn btn-primary" onclick="next()" id="nextBtn"><i class="fas fa-arrow-right"></i></button>
+      <button type="button" class="btn btn-primary" onclick="next()" id="nextBtn"><i
+          class="fas fa-arrow-right"></i></button>
     </div>
   </center>
   <!-- Page Content -->
@@ -93,10 +106,11 @@
         </center>
         <hr class="my-1">
         <div class="list-group" id="timeline" role="tablist">
-          <a class="list-group-item list-group-item-action" id="tempListItm" data-toggle="list" href="#list-0" role="tab" aria-controls="home">Segment Name<small> Video</small></a>
+          <a class="list-group-item list-group-item-action" id="tempListItm" data-toggle="list" href="#option-0"
+            role="tab" aria-controls="home">Segment Name<small> Video</small></a>
         </div>
       </div>
-      <div class="vl" style=""></div>
+      <div class="vl"></div>
       <div class="col">
         <center>
           <h1>Options</h1>
@@ -106,7 +120,7 @@
           <!-- LIVE SHOT OPTIONS TEMPLATE -->
           <div class="tab-pane fade" id="tempLiveShotText" role="tabpanel" aria-labelledby="list-home-list">
             <!-- Camera Selector -->
-            <div class="form-group">
+            <div class="form-group" id="form">
               <h3> Camera Settings </h3>
               <select class="form-control" id="cameraSelect" style="width: 4rem;">
                 <option>1</option>
@@ -132,13 +146,13 @@
             </div>
           </div>
           <!-- GRAPHICS OPTIONS TEMPLATE -->
-          <div class="tab-pane fade" id="tempGraphicText" role="tabpanel" aria-labelledby="list-profile-list" id="tempGraphicText">
+          <div class="tab-pane fade" id="tempGraphicText" role="tabpanel" aria-labelledby="list-profile-list">
             <h2></h2>
-
-
+            <img id="uploadPreview-temp" style="width: 100px; height: 100px;" />
+            <input id="uploadImage-temp" type="file" name="myPhoto" onchange="PreviewImage(1);" />
           </div>
           <!-- VIDEO OPTIONS TEMPLATE -->
-          <div class="tab-pane fade" id="tempVideoText" role="tabpanel" aria-labelledby="list-messages-list" id="tempVideoText">
+          <div class="tab-pane fade" id="tempVideoText" role="tabpanel" aria-labelledby="list-messages-list">
             <h2></h2>
 
 
@@ -147,28 +161,30 @@
         </div>
       </div>
     </div>
-
 
 
     <!-- Output View -->
     <div class="container">
       <div class="row">
         <div class="col">
-          <video id="output" height="100%" , width="100%"></video>
+          <video id="" height="100%" , width="100%"></video>
         </div>
       </div>
     </div>
 
 
 
-
     <!-- Scripts Do Not Touch -->
     <script src="./assets/jquery-ui/jquery.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" integrity="sha256-KM512VNnjElC30ehFwehXjx1YCHPiQkOPmqnrWtpccM=" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery-sortablejs@latest/jquery-sortable.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+      integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
+    </script>
     <script src="./morningBroadcast.js"></script>
 </body>
 

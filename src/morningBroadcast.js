@@ -1,12 +1,29 @@
 const electron = require('electron')
-const editJsonFile = require("edit-json-file");
 const ipcRenderer = electron.ipcRenderer;
 const {
   desktopCapturer
 } = electron;
-let preset = editJsonFile(`${__dirname}/assets/data/broadcastPreset.json`);
+var fs = require('fs');
 var curLive = 0;
 var curPreview = 0;
+var previewMedia = 0;
+var first = true;
+
+//ATEM Setup
+const {
+  Atem
+} = require('atem-connection')
+const myAtem = new Atem({
+  externalLog: console.log
+})
+
+myAtem.connect('169.254.220.239')
+
+myAtem.on('connected', () => {
+  document.getElementById("statusText").innerHTML = myAtem.state.info.productIdentifier + " has been connected!"
+  $('#status').show();
+})
+
 
 //Create the Modal List
 var sortable = Sortable.create(rundownList, {
@@ -25,7 +42,7 @@ function newSegment() {
   input.value = "";
   document.getElementById("rundownList").appendChild(item);
 
-  $('.delete').on('click', function() {
+  $('.delete').on('click', function () {
     $(this).parent().parent().remove();
     document.getElementById("newSegment").removeAttribute('disabled');
   });
@@ -38,7 +55,9 @@ function newSegment() {
 }
 
 //Show Modal and Add the List
-$(document).ready(function() {
+$(document).ready(function () {
+
+  $('#status').hide();
   var i = 0;
   while (i < 4) {
     var temp = document.getElementById("item0");
@@ -64,7 +83,7 @@ $(document).ready(function() {
     i++;
     item.id = "item" + i;
   }
-  $('.delete').on('click', function() {
+  $('.delete').on('click', function () {
     $(this).parent().parent().remove();
     document.getElementById("newSegment").removeAttribute('disabled');
   });
@@ -90,6 +109,12 @@ function newRunDown() {
   document.getElementById("optionList").removeChild(tempGraphicText);
   document.getElementById("optionList").removeChild(tempVideoText);
   $('#mainModal').modal('hide')
+  //Clear ATEM Media Pool
+  for (i = 0; i <= 20; i++) {
+    myAtem.clearMediaPoolStill(i);
+  }
+  myAtem.changePreviewInput(1000);
+  myAtem.changeProgramInput(1000);
 }
 
 //New Cards
@@ -107,17 +132,18 @@ function newCard(name, index, type) {
       //Make New Item in Rundown
       newItemListItm.innerHTML = name;
       newItemListItm.id = index;
-      newItemListItm.href = "#" + "list-" + index;
+      newItemListItm.href = "#" + "option-" + index + "-liveShot";
       var typ = document.createElement("small");
       typ.innerHTML = " " + type;
       newItemListItm.appendChild(typ);
 
       itemList.appendChild(newItemListItm);
       //Make New Item for Options
-      newLiveShotText.id = "list-" + index;
-      //newLiveShotText.innerHTML = index + " TEXT " + type;
-
+      newLiveShotText.id = "option-" + index + "-liveShot";
       optionsList.appendChild(newLiveShotText);
+
+      document.getElementById("option-" + index + "-liveShot").querySelector("#cameraSelect").id = "cameraSelect-" + index;
+
       break;
     case "Video":
       var newItemListItm = tempListItm.cloneNode(true);
@@ -125,14 +151,14 @@ function newCard(name, index, type) {
       //Make New Item in Rundown
       newItemListItm.innerHTML = name;
       newItemListItm.id = index;
-      newItemListItm.href = "#" + "list-" + index;
+      newItemListItm.href = "#" + "option-" + index + "-video";
       var typ = document.createElement("small");
       typ.innerHTML = " " + type;
       newItemListItm.appendChild(typ);
 
       itemList.appendChild(newItemListItm);
       //Make New Item for Options
-      newVideoText.id = "list-" + index;
+      newVideoText.id = "option-" + index + "-video";
       newVideoText.innerHTML = index + " TEXT " + type;
       optionsList.appendChild(newVideoText);
       break;
@@ -143,43 +169,27 @@ function newCard(name, index, type) {
       //Make New Item in Rundown
       newItemListItm.innerHTML = name;
       newItemListItm.id = index;
-      newItemListItm.href = "#" + "list-" + index;
+      newItemListItm.href = "#" + "option-" + index + "-graphic";
       var typ = document.createElement("small");
       typ.innerHTML = " " + type;
       newItemListItm.appendChild(typ);
 
       itemList.appendChild(newItemListItm);
       //Make New Item for Options
-      newGraphicText.id = "list-" + index;
-      newGraphicText.innerHTML = index + " TEXT " + type;
+      newGraphicText.id = "option-" + index + "-graphic";
+
       optionsList.appendChild(newGraphicText);
+
+      document.getElementById("option-" + index + "-graphic").querySelector("#uploadPreview-temp").id = "uploadPreview-" + index;
+      document.getElementById("option-" + index + "-graphic").querySelector("#uploadImage-temp").setAttribute("onChange", `PreviewImage(${index});`);
+      document.getElementById("option-" + index + "-graphic").querySelector("#uploadImage-temp").id = "uploadImage-" + index;
       break;
 
   }
 
 }
 
-const {
-  Atem
-} = require('atem-connection')
-const myAtem = new Atem({
-  externalLog: console.log
-})
-
-myAtem.connect('169.254.220.239')
-
-myAtem.on('connected', () => {
-  myAtem.changeProgramInput(1).then((res) => {
-    // ProgramInputCommand {
-    // 	flag: 0,
-    // 	rawName: 'PrgI',
-    // 	mixEffect: 0,
-    // 	properties: { source: 3 },
-    // 	resolve: [Function],
-    // 	reject: [Function] }
-  })
-})
-
+//Handles Setting Next Live and Next Preview
 function next() {
   if (document.getElementById(curPreview + "-preview")) {
     var currPre = document.getElementById(curPreview + "-preview");
@@ -201,12 +211,97 @@ function next() {
     curLive++;
 
   } else {
-    var live = document.getElementById("0");
-    live.id = "0-live";
-    live.classList.add("list-group-item-danger");
-    var preview = document.getElementById("1");
-    preview.classList.add("list-group-item-success");
-    preview.id = "1-preview";
+    var newLive = document.getElementById("0");
+    newLive.id = "0-live";
+    newLive.classList.add("list-group-item-danger");
+    var newPreview = document.getElementById("1");
+    newPreview.classList.add("list-group-item-success");
+    newPreview.id = "1-preview";
     curPreview++;
+  }
+  live(curLive);
+  preview(curPreview);
+
+}
+
+//Handles image preview for all Graphics
+function PreviewImage(index) {
+  var oFReader = new FileReader();
+  oFReader.readAsDataURL(document.getElementById("uploadImage-" + index).files[0]);
+
+  oFReader.onload = function (oFREvent) {
+    document.getElementById("uploadPreview-" + index).src = oFREvent.target.result;
+  };
+}
+
+//Sets Live
+function live(index) {
+  if (!first) {
+    myAtem.cut();
+  } else {
+    if (document.getElementById("option-" + index + "-liveShot")) {
+      var cam = document.getElementById("cameraSelect-" + index).value;
+      myAtem.changePreviewInput(cam);
+      myAtem.cut();
+    } else if (document.getElementById("option-" + index + "-graphic") && first) {
+      var graphic = document.getElementById("uploadPreview-" + index).src;
+      imageToSwitcher(graphic);
+      myAtem.changePreviewInput(3010);
+      myAtem.cut();
+      console.log("FIRST");
+    } else {
+      myAtem.cut();
+    }
+    first = false;
+  }
+}
+
+//Sets Preview
+function preview(index) {
+  if (document.getElementById("option-" + index + "-liveShot")) {
+    var cam = document.getElementById("cameraSelect-" + index).value;
+    myAtem.changePreviewInput(cam);
+  } else if (document.getElementById("option-" + index + "-graphic")) {
+    var graphic = document.getElementById("uploadPreview-" + index).src;
+    imageToSwitcher(graphic);
+    switch (previewMedia) {
+      case 0:
+        myAtem.changePreviewInput(3020);
+        break
+
+      case 1:
+        myAtem.changePreviewInput(3010);
+    }
+  }
+}
+
+
+//Sends Images to the Switcher
+function imageToSwitcher(src) {
+  var img = new Image(1080, 1920);
+  img.src = src;
+  var height = img.height;
+  var width = img.width;
+  var c = document.getElementById("myCanvas");
+  c.width = 1920;
+  c.height = 1080;
+  var ctx = c.getContext("2d");
+  ctx.drawImage(img, 0, 0, height, width);
+  var imgData = ctx.getImageData(10, 10, 1920, 1080).data;
+  myAtem.uploadStill(previewMedia, imgData, "Test6", "Test");
+  if (previewMedia == 1) {
+    previewMedia--;
+  } else {
+    previewMedia++;
+  }
+}
+
+//Sleep Function
+function sleep(milliseconds) {
+  var start = new Date().getTime();
+  for (var i = 0; i < 1e7; i++) {
+    if ((new Date().getTime() - start) > milliseconds) {
+      break;
+    }
   }
 }

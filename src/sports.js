@@ -1,9 +1,7 @@
 const electron = require('electron')
 const editJsonFile = require("edit-json-file");
 const ipcRenderer = electron.ipcRenderer;
-const {
-  desktopCapturer
-} = electron
+const { desktopCapturer} = electron
 const fs = require('fs');
 
 let config = editJsonFile(`${__dirname}/assets/data/sports.json`);
