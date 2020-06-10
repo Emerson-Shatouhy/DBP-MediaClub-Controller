@@ -1,18 +1,9 @@
-const electron = require('electron')
-const ipcRenderer = electron.ipcRenderer;
-const {
-  desktopCapturer
-} = electron;
-var fs = require('fs');
+
 var curLive = 0;
 var curPreview = 0;
 var previewMedia = 0;
 var first = true;
-
 //ATEM Setup
-const {
-  Atem
-} = require('atem-connection')
 const myAtem = new Atem({
   externalLog: console.log
 })

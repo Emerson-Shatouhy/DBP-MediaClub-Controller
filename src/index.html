@@ -2,6 +2,7 @@
 <html>
 
 <head>
+  <link rel="stylesheet" href="./assets/css/dark-mode.css">
   <link rel="stylesheet" href="./assets/css/main.css">
   <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
@@ -18,7 +19,7 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
+      <ul class="navbar-nav w-100">
         <li class="nav-item active">
           <a class="nav-link" href="index.html">Home<span class="sr-only">(current)</span></a>
         </li>
@@ -31,12 +32,38 @@
         <li class="nav-item">
           <a class="nav-link" href="mass.html">Mass</a>
         </li>
+        <li class="nav-item ml-auto">
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#settingsModal"><i class="fas fa-cog"></i></button>
+        </li>
       </ul>
     </div>
   </nav>
 </head>
 
 <body>
+  <!-- Modal -->
+  <div class="modal" tabindex="-1" role="dialog" id="settingsModal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Settings</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="custom-control custom-switch">
+            <input type="checkbox" checked="" class="custom-control-input" id="themeSwitch">
+            <label class="custom-control-label" for="themeSwitch">Dark Mode</label>
+        </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+        </div>
+      </div>
+    </div>
+  </div>
   <!-- Page Content -->
   <div class="jumbotron jumbotron-fluid">
     <div class="container">
@@ -61,7 +88,8 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
     integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
   </script>
-  <script src="./index.js"></script>
+  <script src="index.js"></script>
+  <script src="./assets/JS/dark-mode-switch.js"></script>
 </body>
 
 </html>

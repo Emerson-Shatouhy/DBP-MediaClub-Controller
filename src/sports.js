@@ -1,10 +1,4 @@
-const electron = require('electron')
-const editJsonFile = require("edit-json-file");
-const ipcRenderer = electron.ipcRenderer;
-const { desktopCapturer} = electron
-const fs = require('fs');
-
-let config = editJsonFile(`${__dirname}/assets/data/sports.json`);
+let stats = editJsonFile(`${__dirname}/assets/data/sports.json`);
 let startTime = "0";
 let otherColor = "";
 //Opens Modal on Start
@@ -13,14 +7,16 @@ $(document).ready(function() {
 
 });
 
+
+
 //Modal Control
 function modalSubmit() {
-  config.set("otherTeam", document.forms["modalForm"]["vistingTeam"].value);
+  stats.set("otherTeam", document.forms["modalForm"]["vistingTeam"].value);
   otherColor = (document.forms["modalForm"]["otherColor"].value);
   var current = document.getElementById("opponent").innerHTML;
-  document.getElementById("opponent").innerHTML = config.get("otherTeam") + " " + current;
-  config.set("boscoScore", 0);
-  config.set("otherScore", 0);
+  document.getElementById("opponent").innerHTML = stats.get("otherTeam") + " " + current;
+  stats.set("boscoScore", 0);
+  stats.set("otherScore", 0);
   if (document.forms["modalForm"]["sportControl"].value == "Football") {
     document.getElementById("clockSet").value = "15:00";
     startTime = "15:00";
@@ -71,7 +67,7 @@ function modalSubmit() {
   function handleError(e) {
     console.log(e)
   }
-  ipcRenderer.invoke('init', config.get("otherTeam"), startTime, otherColor);
+  ipcRenderer.invoke('init', stats.get("otherTeam"), startTime, otherColor);
 }
 
 //Output Control
@@ -137,5 +133,23 @@ function sleep(milliseconds) {
     if ((new Date().getTime() - start) > milliseconds) {
       break;
     }
+  }
+}
+
+
+function initTheme() {
+
+  darkSwitch.checked = darkThemeSelected;
+  darkThemeSelected ? document.body.setAttribute('data-theme', 'dark') :
+    document.body.removeAttribute('data-theme');
+}
+
+function resetTheme() {
+  if (darkSwitch.checked) {
+    document.body.setAttribute('data-theme', 'dark');
+    localStorage.setItem('darkSwitch', 'dark');
+  } else {
+    document.body.removeAttribute('data-theme');
+    localStorage.removeItem('darkSwitch');
   }
 }
