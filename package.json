@@ -23,6 +23,7 @@
     "image-to-rgba-matrix": "^1.0.0",
     "jimp": "^0.13.0",
     "jpeg-js": "^0.4.0",
+    "mousetrap": "^1.6.5",
     "sortablejs": "^1.10.2"
   }
 }

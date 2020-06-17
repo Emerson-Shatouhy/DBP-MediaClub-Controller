@@ -91,3 +91,20 @@
 [data-theme="dark"] .list-group-item-danger {
     color: #AC131C !important;
 }
+
+[data-theme="dark"] .card {
+    background-color: rgba(36, 52, 71, 0.5) !important;
+}
+
+[data-theme="dark"] .card-body {
+    color: #eee !important;
+    background-color: rgba(36, 52, 71) !important;
+}
+
+[data-theme="dark"] .list-group-item.active{
+    background-color: #7289DA !important;
+}
+
+[data-theme="dark"] .list-group-item:hover{
+    background-color: #243447 !important;
+}

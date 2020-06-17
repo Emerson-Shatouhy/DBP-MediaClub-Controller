@@ -4,7 +4,7 @@ const ipcRenderer = electron.ipcRenderer;
 const { desktopCapturer} = electron
 const fs = require('fs');
 const { Atem } = require('atem-connection')
-
+var Mousetrap = require('mousetrap');
 
 let config = editJsonFile(`${__dirname}/assets/data/config.json`);
 $("#themeSwitch").change(function(){
@@ -20,6 +20,12 @@ $("#themeSwitch").change(function(){
         config.save();
     }
 });
+
+
+
+
+
+
 
 $('#settingsModal').on('show.bs.modal', function () {
     if(config.get("theme") !== "dark"){

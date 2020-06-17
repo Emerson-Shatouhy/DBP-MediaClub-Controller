@@ -1,13 +1,35 @@
 let stats = editJsonFile(`${__dirname}/assets/data/sports.json`);
 let startTime = "0";
 let otherColor = "";
+let clockRunning = false;
 //Opens Modal on Start
 $(document).ready(function() {
   $('#mainModal').modal('show')
 
 });
+//Keybindings
 
+//Clock Start/Stop
+Mousetrap.bind('enter', function () {
+  if(clockRunning){
+    clock("stop");
+  } else {
+    clock("start");
+  }
+});
 
+Mousetrap.bind('ctrl+up', function () {
+  points("bosco", 1, "+");
+});
+Mousetrap.bind('ctrl+down', function () {
+  points("bosco", 1, "-");
+});
+Mousetrap.bind('shift+up', function () {
+  points("other", 1, "+");
+});
+Mousetrap.bind('shift+down', function () {
+  points("other", 1, "-");
+});
 
 //Modal Control
 function modalSubmit() {
@@ -82,10 +104,12 @@ function clock(arg) {
   if (arg == "start") {
     document.getElementById("clockSet").setAttribute('disabled', 'true');
     ipcRenderer.invoke('clock', 'start');
+    clockRunning = true;
   }
   if (arg == "stop") {
     ipcRenderer.invoke('clock', 'stop');
     document.getElementById("clockSet").removeAttribute('disabled');
+    clockRunning = false;
   }
   if (arg == "set") {
     ipcRenderer.invoke('clock', 'set', document.getElementById("clockSet").value);
@@ -119,8 +143,10 @@ function points(team, points, action) {
       ipcRenderer.invoke('point', teamID, newScore);
       break;
     case "-":
+      if(currentScore > 0){
       var newScore = document.getElementById(teamID).innerHTML = currentScore - Number(points);
       ipcRenderer.invoke('point', teamID, newScore);
+      }
       break;
   }
 }

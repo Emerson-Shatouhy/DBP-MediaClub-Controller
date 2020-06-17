@@ -1,4 +1,3 @@
-
 var curLive = 0;
 var curPreview = 0;
 var previewMedia = 0;
@@ -21,7 +20,34 @@ var sortable = Sortable.create(rundownList, {
   animation: 150,
 });
 
-
+//Key Bindings
+Mousetrap.bind('1', function () {
+  $('#0').tab('show')
+});
+Mousetrap.bind('2', function () {
+  $('#1').tab('show')
+});
+Mousetrap.bind('3', function () {
+  $('#2').tab('show')
+});
+Mousetrap.bind('4', function () {
+  $('#3').tab('show')
+});
+Mousetrap.bind('5', function () {
+  $('#4').tab('show')
+});
+Mousetrap.bind('6', function () {
+  $('#5').tab('show')
+});
+Mousetrap.bind('7', function () {
+  $('#6').tab('show')
+});
+Mousetrap.bind('8', function () {
+  $('#7').tab('show')
+});
+Mousetrap.bind('enter', function () {
+    next();
+});
 
 
 //New Item in list
