@@ -1,7 +1,23 @@
+const {
+  ProgramInputCommand
+} = require("atem-connection/dist/commands");
+
 var curLive = 0;
 var curPreview = 0;
 var previewMedia = 0;
 var first = true;
+
+var previewCanvas = document.getElementById('previewCanvas');
+var previewCtx = previewCanvas.getContext('2d');
+var liveCanvas = document.getElementById('liveCanvas');
+var liveCtx = liveCanvas.getContext('2d');
+
+$('#previewCanvas').css('width', '100%');
+$('#liveCanvas').css('width', '100%');
+$(window).resize(function () {
+  $('#previewCanvas').height($('#previewCanvas').width() / 1.78);
+  $('#liveCanvas').height($('#liveCanvas').width() / 1.78);
+});
 //ATEM Setup
 const myAtem = new Atem({
   externalLog: console.log
@@ -46,7 +62,7 @@ Mousetrap.bind('8', function () {
   $('#7').tab('show')
 });
 Mousetrap.bind('enter', function () {
-    next();
+  next();
 });
 
 
@@ -104,7 +120,12 @@ $(document).ready(function () {
     $(this).parent().parent().remove();
     document.getElementById("newSegment").removeAttribute('disabled');
   });
-
+  var img1 = new Image();
+  img1.addEventListener('load', function () {
+    liveCtx.drawImage(img1, 0, 0, liveCanvas.width, liveCanvas.height);
+    previewCtx.drawImage(img1, 0, 0, previewCanvas.width, previewCanvas.height);
+  }, false);
+  img1.src = "./assets/images/colorbars.png";
 
   $('#mainModal').modal('show');
 });
@@ -260,27 +281,30 @@ function live(index) {
       var cam = document.getElementById("cameraSelect-" + index).value;
       myAtem.changePreviewInput(cam);
       myAtem.cut();
+      updateLive("liveShot");
     } else if (document.getElementById("option-" + index + "-graphic") && first) {
       var graphic = document.getElementById("uploadPreview-" + index).src;
-      imageToSwitcher(graphic);
+      updateLive("graphic", graphic);
       myAtem.changePreviewInput(3010);
       myAtem.cut();
-      console.log("FIRST");
+
     } else {
       myAtem.cut();
     }
     first = false;
   }
+  updateLive("graphic", graphic);
 }
 
 //Sets Preview
 function preview(index) {
   if (document.getElementById("option-" + index + "-liveShot")) {
     var cam = document.getElementById("cameraSelect-" + index).value;
+    updatePreview("liveshot");
     myAtem.changePreviewInput(cam);
   } else if (document.getElementById("option-" + index + "-graphic")) {
     var graphic = document.getElementById("uploadPreview-" + index).src;
-    imageToSwitcher(graphic);
+    updatePreview("graphic", graphic);
     switch (previewMedia) {
       case 0:
         myAtem.changePreviewInput(3020);
@@ -292,20 +316,67 @@ function preview(index) {
   }
 }
 
+function updatePreview(option, src) {
+  if (document.getElementById(curPreview + "-preview")) {
+    switch (option) {
+      case "liveshot":
 
-//Sends Images to the Switcher
-function imageToSwitcher(src) {
-  var img = new Image(1080, 1920);
-  img.src = src;
-  var height = img.height;
-  var width = img.width;
-  var c = document.getElementById("myCanvas");
-  c.width = 1920;
-  c.height = 1080;
-  var ctx = c.getContext("2d");
-  ctx.drawImage(img, 0, 0, height, width);
-  var imgData = ctx.getImageData(10, 10, 1920, 1080).data;
-  myAtem.uploadStill(previewMedia, imgData, "Test6", "Test");
+        break
+      case "graphic":
+        var img = new Image(previewCanvas.width, previewCanvas.height);
+        img.src = src;
+        previewCtx.drawImage(img, 0, 0, previewCanvas.width, previewCanvas.height);
+        var canvas = document.getElementById("temp")
+        canvas.height = 1080;
+        canvas.width = 1920;
+        var ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, 1920, 1080);
+        var imgData = ctx.getImageData(10, 10, 1920, 1080).data;
+        myAtem.uploadStill(previewMedia, imgData, "MEDIA", "MEDIA");
+        updateMediaPool();
+        break
+    }
+  } else {
+    var img1 = new Image();
+    img1.addEventListener('load', function () {
+      previewCtx.drawImage(img1, 0, 0, previewCanvas.width, previewCanvas.height);
+    }, false);
+    img1.src = "./assets/images/colorbars.png";
+  }
+}
+
+
+function updateLive(option, src) {
+  if (!first) {
+    liveCtx.drawImage(previewCanvas, 0, 0)
+  } else {
+    switch (option) {
+      case "liveshot":
+
+        break
+      case "graphic":
+        var img = new Image(liveCanvas.width, liveCanvas.height);
+        img.src = src;
+        img.addEventListener('load', function () {
+          liveCtx.drawImage(img, 0, 0, liveCanvas.width, liveCanvas.height)
+        }, false);
+
+        var canvas = document.getElementById("temp")
+        canvas.height = 1080;
+        canvas.width = 1920;
+        var ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, 1920, 1080);
+        var imgData = ctx.getImageData(10, 10, 1920, 1080).data;
+        myAtem.uploadStill(previewMedia, imgData, "MEDIA", "MEDIA");
+
+        updateMediaPool();
+        break
+    }
+  }
+
+}
+
+function updateMediaPool() {
   if (previewMedia == 1) {
     previewMedia--;
   } else {

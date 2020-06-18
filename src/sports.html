@@ -4,7 +4,8 @@
 <head>
   <link rel="stylesheet" href="./assets/css/main.css">
   <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <link rel="stylesheet" href="./assets/css/dark-mode.css">
   <script src="https://kit.fontawesome.com/d1450878f8.js" crossorigin="anonymous"></script>
 
@@ -14,7 +15,8 @@
   <!-- Nav Bar -->
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="#">Don Bosco Prep Media Club</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
@@ -32,7 +34,8 @@
           <a class="nav-link" href="mass.html">Mass</a>
         </li>
         <li class="nav-item ml-auto">
-          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#settingsModal"><i class="fas fa-cog"></i></button>
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#settingsModal"><i
+              class="fas fa-cog"></i></button>
         </li>
       </ul>
     </div>
@@ -40,8 +43,8 @@
 </head>
 
 <body>
-   <!-- Settings Modal -->
-   <div class="modal" tabindex="-1" role="dialog" id="settingsModal">
+  <!-- Settings Modal -->
+  <div class="modal" tabindex="-1" role="dialog" id="settingsModal">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -54,17 +57,18 @@
           <div class="custom-control custom-switch">
             <input type="checkbox" checked="" class="custom-control-input" id="themeSwitch">
             <label class="custom-control-label" for="themeSwitch">Dark Mode</label>
-        </div>
+          </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 
         </div>
       </div>
-    </div> 
-</div>
+    </div>
+  </div>
   <!-- Main Modal -->
-  <div class="modal fade" id="mainModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="mainModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -86,7 +90,8 @@
             </div>
             <div class="form-group">
               <label for="formGroupExampleInput">Visting Team</label>
-              <input name="vistingTeam" type="text" class="form-control" id="formGroupExampleInput" placeholder="Team Name">
+              <input name="vistingTeam" type="text" class="form-control" id="formGroupExampleInput"
+                placeholder="Team Name">
             </div>
             <label for="otherColor">Visiting Team Color</label>
             <div class="form-group">
@@ -136,7 +141,8 @@
             <div class="input-group-prepend">
               <div class="input-group-text" id="btnGroupAddon">Time:</div>
             </div>
-            <input id="clockSet" type="text" class="form-control" placeholder="MM:SS" aria-label="Input group example" aria-describedby="btnGroupAddon" value="12:00">
+            <input id="clockSet" type="text" class="form-control" placeholder="MM:SS" aria-label="Input group example"
+              aria-describedby="btnGroupAddon" value="12:00">
           </div>
         </div>
         <div class="btn-group" role="group" aria-label="Clock Control">
@@ -145,7 +151,8 @@
             <div class="input-group-prepend">
               <div class="input-group-text" id="btnGroupAddon">Quarter:</div>
             </div>
-            <input id="quarterSet" type="text" class="form-control" placeholder="Q1" aria-label="Input group example" aria-describedby="btnGroupAddon" value="Q1">
+            <input id="quarterSet" type="text" class="form-control" placeholder="Q1" aria-label="Input group example"
+              aria-describedby="btnGroupAddon" value="Q1">
           </div>
         </div>
         <hr class="my-3">
@@ -194,7 +201,8 @@
                   <div class="input-group-prepend">
                     <div class="input-group-text" id="btnGroupAddon">Commentator A Name:</div>
                   </div>
-                  <input id="commentatorA" type="text" class="form-control" placeholder="Name" aria-describedby="btnGroupAddon">
+                  <input id="commentatorA" type="text" class="form-control" placeholder="Name"
+                    aria-describedby="btnGroupAddon">
                 </div>
             </div>
             <div class="col">
@@ -202,7 +210,8 @@
                 <div class="input-group-prepend">
                   <div class="input-group-text" id="btnGroupAddon">Commentator A Secondary:</div>
                 </div>
-                <input id="commentatorA" type="text" class="form-control" placeholder="Other" aria-describedby="btnGroupAddon">
+                <input id="commentatorA" type="text" class="form-control" placeholder="Other"
+                  aria-describedby="btnGroupAddon">
               </div>
               </form>
             </div>
@@ -216,7 +225,8 @@
                   <div class="input-group-prepend">
                     <div class="input-group-text" id="btnGroupAddon">Commentator B Name:</div>
                   </div>
-                  <input id="commentatorA" type="text" class="form-control" placeholder="Name" aria-describedby="btnGroupAddon">
+                  <input id="commentatorA" type="text" class="form-control" placeholder="Name"
+                    aria-describedby="btnGroupAddon">
                 </div>
             </div>
             <div class="col">
@@ -224,14 +234,16 @@
                 <div class="input-group-prepend">
                   <div class="input-group-text" id="btnGroupAddon">Commentator B Secondary:</div>
                 </div>
-                <input id="commentatorB" type="text" class="form-control" placeholder="Other" aria-describedby="btnGroupAddon">
+                <input id="commentatorB" type="text" class="form-control" placeholder="Other"
+                  aria-describedby="btnGroupAddon">
               </div>
               </form>
             </div>
           </div>
         </div>
         <div class="paddingTop">
-          <center><button type="button" class="btn btn-primary" onclick="quarter()"><span style="padding-left: 1.5rem; padding-right: 1.5rem;">Set</span></button></center>
+          <center><button type="button" class="btn btn-primary" onclick="quarter()"><span
+                style="padding-left: 1.5rem; padding-right: 1.5rem;">Set</span></button></center>
         </div>
         <br>
         <h2>Graphic Control</h2>
@@ -240,10 +252,10 @@
           <div class="row">
             <div class="col">
               <p>Main Scoreboard
-              <div class="btn-group" role="group" aria-label="Basic example">
-                <button type="button" class="btn btn-success">In</button>
-                <button type="button" class="btn btn-danger">Out</button>
-              </div>
+                <div class="btn-group" role="group" aria-label="Basic example">
+                  <button type="button" class="btn btn-success">In</button>
+                  <button type="button" class="btn btn-danger">Out</button>
+                </div>
               </p>
 
 
@@ -261,9 +273,15 @@
 
 
   <!-- Scripts Do Not Touch -->
-  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+  </script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
+  </script>
   <script src="index.js"></script>
   <script src="./sports.js"></script>
   <script src="./assets/JS/dark-mode-switch.js"></script>

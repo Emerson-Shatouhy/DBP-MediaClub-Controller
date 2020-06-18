@@ -6,7 +6,7 @@
   <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="./assets/css/dark-mode.css">
+  <link rel="stylesheet" href="./assets/css/dark-mode.css">
   <meta charset="UTF-8">
   <script src="https://kit.fontawesome.com/d1450878f8.js" crossorigin="anonymous"></script>
   <title>DBP Media Club Media System || Morning Broadcast</title>
@@ -33,7 +33,8 @@
           <a class="nav-link" href="mass.html">Mass</a>
         </li>
         <li class="nav-item ml-auto">
-          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#settingsModal"><i class="fas fa-cog"></i></button>
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#settingsModal"><i
+              class="fas fa-cog"></i></button>
         </li>
 
       </ul>
@@ -42,7 +43,6 @@
 </head>
 
 <body>
-  <canvas id="myCanvas"></canvas>
   <!-- Settings Modal -->
   <div class="modal" tabindex="-1" role="dialog" id="settingsModal">
     <div class="modal-dialog" role="document">
@@ -57,7 +57,7 @@
           <div class="custom-control custom-switch">
             <input type="checkbox" checked="" class="custom-control-input" id="themeSwitch">
             <label class="custom-control-label" for="themeSwitch">Dark Mode</label>
-        </div>
+          </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -114,6 +114,19 @@
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>
+  </div>
+
+  <!-- Media View-->
+  <br>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col">
+        <canvas id="previewCanvas" style="border:2px solid green;"></canvas>
+      </div>
+      <div class="col">
+        <canvas id="liveCanvas" style="border:2px solid red;"></canvas>
+      </div>
+    </div>
   </div>
   <!-- Above Timeline -->
   <center>
@@ -190,15 +203,7 @@
     </div>
 
 
-    <!-- Output View -->
-    <div class="container">
-      <div class="row">
-        <div class="col">
-          <video id="" height="100%" , width="100%"></video>
-        </div>
-      </div>
-    </div>
-
+    <canvas id="temp" hidden></canvas>
 
 
     <!-- Scripts Do Not Touch -->
@@ -212,7 +217,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
       integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
     </script>
-     <script src="index.js"></script> 
+    <script src="index.js"></script>
     <script src="./morningBroadcast.js"></script>
     <script src="./assets/JS/dark-mode-switch.js"></script>
 </body>

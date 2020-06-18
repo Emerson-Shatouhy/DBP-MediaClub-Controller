@@ -3,15 +3,14 @@ let startTime = "0";
 let otherColor = "";
 let clockRunning = false;
 //Opens Modal on Start
-$(document).ready(function() {
+$(document).ready(function () {
   $('#mainModal').modal('show')
 
 });
 //Keybindings
 
-//Clock Start/Stop
 Mousetrap.bind('enter', function () {
-  if(clockRunning){
+  if (clockRunning) {
     clock("stop");
   } else {
     clock("start");
@@ -94,7 +93,7 @@ function modalSubmit() {
 
 //Output Control
 const BrowserWindow = electron.remote.BrowserWindow
-$(".btnSeccion").click(function(event) {
+$(".btnSeccion").click(function (event) {
   btnMostrarSeccion($(this));
   event.preventDefault();
 })
@@ -117,12 +116,12 @@ function clock(arg) {
 }
 
 //Clock Done Alert
-ipcRenderer.on('clockDone', function(event) {
+ipcRenderer.on('clockDone', function (event) {
   document.getElementById("clockSet").removeAttribute('disabled');
 });
 
 //Current Time
-ipcRenderer.on('currentTime', function(event, data) {
+ipcRenderer.on('currentTime', function (event, data) {
   var newTime = data.min + ":" + data.sec;
   document.getElementById("clockSet").value = newTime.toString();
 });
@@ -143,9 +142,9 @@ function points(team, points, action) {
       ipcRenderer.invoke('point', teamID, newScore);
       break;
     case "-":
-      if(currentScore > 0){
-      var newScore = document.getElementById(teamID).innerHTML = currentScore - Number(points);
-      ipcRenderer.invoke('point', teamID, newScore);
+      if (currentScore > 0) {
+        var newScore = document.getElementById(teamID).innerHTML = currentScore - Number(points);
+        ipcRenderer.invoke('point', teamID, newScore);
       }
       break;
   }
