@@ -4,8 +4,8 @@ var id = 0;
 
 function createWindow() {
     const win = new BrowserWindow({
-        width: 800,
-        height: 600,
+        width: 1920,
+        height: 1080,
         icon: "./src/assets/images/icon.jpg",
         webPreferences: {
             nodeIntegration: true
@@ -15,14 +15,16 @@ function createWindow() {
 
     //IPC Start Here
     ipcMain.handle('start', async (event) => {
+        
         let outPut = new BrowserWindow({
+            width: 1080,
+            height: 1080,
+            frame: true,
             webPreferences: {
                 nodeIntegration: true,
-                width: 400,
-                height: 200,
-                icon: "./src/assets/images/icon.jpg",
-                backgroundColor: '#000000',
-                frame: false
+                backgroundColor: '#0047bb',
+                frame: true,
+                title: "",
             }
         })
         outPut.on('close', function() {
@@ -30,7 +32,7 @@ function createWindow() {
         })
         outPut.loadFile('./src/sportsMediaOut.html')
         id = outPut.id;
-        //** REMOVE BEFORE PUBLISH outPut.removeMenu();
+        outPut.setMenuBarVisibility(false)
         outPut.once('ready-to-show', () => {
             outPut.show()
         });
@@ -71,6 +73,20 @@ ipcMain.handle('clockDone', async (event) => {
 ipcMain.handle('setQuarter', async (event, quarter) => {
     BrowserWindow.fromId(id).webContents.send('setQuarter', {
         quarter: quarter,
+    });
+});
+
+//Set Down
+ipcMain.handle('setDown', async (event, down) => {
+    BrowserWindow.fromId(id).webContents.send('setDown', {
+        down: down,
+    });
+});
+
+//Set Yards to Go
+ipcMain.handle('setYTG', async (event, ytg) => {
+    BrowserWindow.fromId(id).webContents.send('setYTG', {
+        ytg: ytg,
     });
 });
 

@@ -31,7 +31,7 @@
           <a class="nav-link" href="sports.html">Sports<span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="mass.html">Mass</a>
+          <a class="nav-link" href="graduation.html">Graduation</a>
         </li>
         <li class="nav-item ml-auto">
           <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#settingsModal"><i
@@ -145,7 +145,8 @@
               aria-describedby="btnGroupAddon" value="12:00">
           </div>
         </div>
-        <div class="btn-group" role="group" aria-label="Clock Control">
+
+        <div class="btn-group" role="group" aria-label="Quarter Control">
           <div class="input-group">
             <button type="button" class="btn btn-primary" onclick="quarter()">Set</button>
             <div class="input-group-prepend">
@@ -153,6 +154,18 @@
             </div>
             <input id="quarterSet" type="text" class="form-control" placeholder="Q1" aria-label="Input group example"
               aria-describedby="btnGroupAddon" value="Q1">
+          </div>
+        </div>
+        <br>
+        <br>
+        <div class="btn-group" role="group" aria-label="Down Control">
+          <div class="input-group">
+            <button type="button" class="btn btn-primary" onclick="down()">Set</button>
+            <div class="input-group-prepend">
+              <div class="input-group-text" id="btnGroupAddon">Down:</div>
+            </div>
+            <input id="downSet" type="text" class="form-control" placeholder="1st" aria-label="Input group example"
+              aria-describedby="btnGroupAddon" value="1st">
           </div>
         </div>
         <hr class="my-3">

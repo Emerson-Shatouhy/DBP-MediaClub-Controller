@@ -137,7 +137,6 @@ function points(team, points, action) {
   currentScore = Number(document.getElementById(teamID).innerHTML);
   switch (action) {
     case "+":
-      console.log("+")
       var newScore = document.getElementById(teamID).innerHTML = currentScore + Number(points);
       ipcRenderer.invoke('point', teamID, newScore);
       break;
@@ -150,6 +149,16 @@ function points(team, points, action) {
   }
 }
 
+//Set Down
+function down(){
+  ipcRenderer.invoke('setDown', document.getElementById("downSet").value);
+}
+
+
+//Set Yards To Go
+function YtG(){
+  ipcRenderer.invoke('setYTG', document.getElementById("ytgSet").value);
+}
 
 //Sleep Function
 function sleep(milliseconds) {

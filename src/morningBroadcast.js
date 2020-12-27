@@ -23,7 +23,7 @@ const myAtem = new Atem({
   externalLog: console.log
 })
 
-myAtem.connect('169.254.220.239')
+myAtem.connect('192.168.1.20')
 
 myAtem.on('connected', () => {
   document.getElementById("statusText").innerHTML = myAtem.state.info.productIdentifier + " has been connected!"
@@ -80,7 +80,7 @@ function newSegment() {
     document.getElementById("newSegment").removeAttribute('disabled');
   });
   var list = document.getElementById("rundownList").getElementsByTagName("input");
-  if (list.length > 8) {
+  if (list.length > 20) {
     document.getElementById("newSegment").setAttribute('disabled', 'true');
   } else {
     document.getElementById("newSegment").removeAttribute('disabled');
