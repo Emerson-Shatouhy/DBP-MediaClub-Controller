@@ -9,7 +9,7 @@
   "author": "Emerson Shatouhy",
   "license": "ISC",
   "devDependencies": {
-    "electron": "^8.3.2",
+    "electron": "^15.5.5",
     "jquery-sortablejs": "^1.0.1"
   },
   "dependencies": {
